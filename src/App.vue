@@ -1,42 +1,59 @@
 <template>
   <div id="app">
-    <top></top>
-    <banner></banner>
-    <daohang></daohang>
-    <bottom></bottom> 
+<<<<<<< HEAD
+=======
+      <!-- <hello></hello> -->
+      <div class="tabbar"> 
+        <router-link to="/home">首页</router-link>
+        <router-link to="/sorts">类别</router-link>
+        <router-link to="/sesscions">主会场</router-link>
+        <router-link to="/market">购物车</router-link>
+        <router-link to="/mine">我的酒仙</router-link>
+      <!-- 使用router-view组件 标签 进行组件显示 -->
+      </div>  
+      <router-view></router-view>
+>>>>>>> shao/jiuxian
   </div>
 </template>
-
 <script>
-import Top from './pages/Top'
-import Banner from './pages/Banner'
-import Daohang from './pages/Daohang'
-import Bottom from './pages/Bottom'
-import Zhuti from './pages/Zhuti'
+
 
 export default {
   name: 'app',
   components: {
-       Top:Top,
-    Banner:Banner,
-    Daohang:Daohang,
-    Bottom:Bottom,
-    Zhuti:Zhuti,
-    Baijiu:Baijiu,
+
   }
 }
 </script>
 
 <style>
-  *{
-    margin: 0px;
-    padding: 0px;
-  }
-  html{
-    font-size: 100px;
-  }
-   #app{
-    width: 100%;
-
-  } 
+<<<<<<< HEAD
+ 
+=======
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+h1{
+  color:red;
+}
+#app .tabbar{
+  position: fixed;
+  left:0;
+  bottom:0;
+  background-color:blanchedalmond;
+  width:100%;
+  height: 60px;
+  line-height:60px;
+  display:flex;
+}
+#app .tabbar a{
+  text-decoration:none;
+  flex:1;
+}
+>>>>>>> shao/jiuxian
 </style>
