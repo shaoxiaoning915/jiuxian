@@ -3,6 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 
+import Top from './pages/Top'
+import Banner from './pages/Banner'
+import Daohang from './pages/Daohang'
+import Bottom from './pages/Bottom'
+import Zhuti from './pages/Zhuti'
+
+// 去掉控制台警告
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
