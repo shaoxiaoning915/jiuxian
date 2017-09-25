@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <hello></hello>
+
   </div>
 </template>
 
@@ -11,7 +10,7 @@ import Hello from './components/Hello'
 export default {
   name: 'app',
   components: {
-    Hello
+   
   }
 }
 </script>
