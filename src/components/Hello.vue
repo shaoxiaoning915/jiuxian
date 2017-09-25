@@ -25,7 +25,8 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'shao'
+      msg: 'shaoxiaoning',
+      msg1:'wogangxiede'
     }
   }
 }
