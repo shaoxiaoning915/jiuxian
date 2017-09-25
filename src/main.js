@@ -2,12 +2,17 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+// 引入路由模块
+import VueRouter from'vue-router'
+// 全局安装路由
+Vue.use(VueRouter)
 
 import Top from './pages/Top'
 import Banner from './pages/Banner'
 import Daohang from './pages/Daohang'
 import Bottom from './pages/Bottom'
 import Zhuti from './pages/Zhuti'
+
 
 // 去掉控制台警告
 Vue.config.productionTip = false
