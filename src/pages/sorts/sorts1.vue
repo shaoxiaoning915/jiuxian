@@ -2,9 +2,9 @@
   <div id="sorts">
     <div id="head">
       <div class="head">
-        <a href="javascript:void(0)" class="prev" @click="backFn"></a>
+        <a href="javascript:void(0)" class="prev"></a>
         <h2 class="headTitle">选酒</h2>
-        <a href="javascript:void(0)" class="navbar" @click="showbar()"></a>
+        <a href="javascript:void(0)" class="navbar"></a>
       </div>
       <ul class="nav">
           <li class="home"><i></i><span>首页</span></li>
@@ -20,55 +20,96 @@
       </div>
     </div>
     <div class="contentFrame">
-      <ul class="list">
-        <li class="bj first" v-for="(item,index) in winelist" :key="item.id">
-          <router-link :to="'/wine/'+ item.winesortId">
-              <i></i>
-              <span>{{ item.winesortName}}</span>
-          </router-link>
+      <ul>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
         </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li> 
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>
+        <li class="bj first">
+          <a href="javascript:void(0)">
+            <i></i>
+            <span>白酒</span>
+          </a>
+        </li>                         
       </ul>
     </div>
   </div>  
-</template>   
+</template>
+    
 <script>
 export default {
+  name: "component_name",
   data () {
-    return{
-      winelist:[],
-      url:'../static/winesortlist.json'
-    }
-  },
-  methods:{
-    backFn(){
-      this.$router.go(-1);
-    },
-    pushFn(winesortId){
-      // this.$router.push('/wine/' + winesortId)
-      this.$router.push({
-        path:'/wine/winesortId',
-        query:{
-          winesortId
-        }
-      })
-    },  
-  },
-  created(){
-    this.$http.get(this.url).then(res =>{
-      // console.log(res,this);
-      this.winelist =res.body.winelist;
-    },err =>{
-      console.log(err);
-    })
+    return {
+        msg: 'sxn'
+    };
   }
-  
 }
 </script>
     
 <style lang="css" scoped>
-    #sorts{
-      margin-top:40px;
-    }
     .contentFrame{
       width:100%;
       margin: 0 auto;
@@ -76,27 +117,19 @@ export default {
     .contentFrame .list li span{
       text-align:center;
     }
-    .contentFrame .list li:nth-child(1) i{
-      background-position: 0 0;
-    }
-    .contentFrame .list li:nth-child(2) i{
-      background-position: -84px 0px;
-    }
-    .contentFrame .list li:nth-of-type(3) i{
-      background-position: -165px 1px;
-    }
     .contentFrame li i{
       width:36px;
       height: 36px;
       display: block;
       margin:10px auto;
       display:block;
-      background:url(https://m.jiuxian.com/mjava_statics/images/selectIcon0314.png);
+      background:url(https://m.jiuxian.com/mjava_statics/images/selectIcon0314.png) 0 0;
     }
     .contentFrame li{
       float:left;
       width:33.3%;
       height: 80px;
+      display:inline-block;
       border:1px solid #f6f6f6;
       border-left:none;
     }
@@ -129,9 +162,9 @@ export default {
     }
     #head{
       width:100%;
-      position: fixed;
+      /* position: fixed;
       left: 0;
-      top:0;
+      top:0; */
     }
     .head{
       width:100%;

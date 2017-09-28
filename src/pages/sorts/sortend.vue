@@ -2,7 +2,7 @@
   <div id="sorts">
     <div id="head">
       <div class="head">
-        <a href="javascript:void(0)" class="prev" @click="backFn"></a>
+        <a href="javascript:void(0)" class="prev"></a>
         <h2 class="headTitle">选酒</h2>
         <a href="javascript:void(0)" class="navbar" @click="showbar()"></a>
       </div>
@@ -40,9 +40,6 @@ export default {
     }
   },
   methods:{
-    backFn(){
-      this.$router.go(-1);
-    },
     pushFn(winesortId){
       // this.$router.push('/wine/' + winesortId)
       this.$router.push({
@@ -51,7 +48,7 @@ export default {
           winesortId
         }
       })
-    },  
+    }
   },
   created(){
     this.$http.get(this.url).then(res =>{

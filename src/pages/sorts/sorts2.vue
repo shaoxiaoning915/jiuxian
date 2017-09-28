@@ -1,0 +1,250 @@
+<template>
+  <div id="sorts">
+    <div class="head">
+      <a href="javascript:void(0)" class="prev"></a>
+      <h2 class="headTitle">商品列表</h2>
+      <a href="javascript:void(0)" class="navbar">筛选</a>
+    </div>  
+    <div class="tabBar clearfix">
+      <a  href="javascript:;" class="tab first">
+        <span>综合</span>
+      </a>
+      <a  href="javascript:;" class="tab">
+        <span>销量</span>
+      </a> 
+      <a href="javascript:;" class="tab">
+        <span>价格</span>
+        <span class="listIcon prodPrice"></span>
+      </a> 
+      <a  href="javascript:;" class="tab tab4">
+        <span class="line"></span>
+        <span class="listIcon"></span>
+      </a>  
+    </div>
+    <div class="content">
+      <ul>
+        <li>
+          <img class="prodImg" src="https://img07.jiuxian.com/2014/0920/3eee2dc02786464989926cc90ee5c3882.jpg">
+          <div class="prodInfo">
+            <div class="prodName">
+              <p class="name"><a href="javascript:;">五粮液股份A级佳宾级小酒版125ml</a></p>
+              <p class="nameAndPro">
+                <span class="sName">
+                  <i class="listIcon"></i>
+                  <span>博酒汇官方旗舰店</span>
+                </span>
+                <span class="promBox">
+                  <em class="prom" style="background-color:#ffa855">限时抢购</em>
+                  <em class="prom" style="background-color:#8888ff">多买多赠</em>
+                </span>
+              </p>
+            </div>
+            <div class="price"><strong>￥9.90</strong></div>
+            <div class="pro">
+              <span class="listIcon"></span> <span class="good"> 98% 好评</span><span class="good">1539评论</span>
+            </div>
+          </div>
+        </li> 
+        <li>
+          <img class="prodImg" src="https://img07.jiuxian.com/2014/0920/3eee2dc02786464989926cc90ee5c3882.jpg">
+          <div class="prodInfo">
+            <div class="prodName">
+              <p class="name"><a href="javascript:;">五粮液股份A级佳宾级小酒版125ml</a></p>
+              <p class="nameAndPro">
+                <span class="sName">
+                  <i class="listIcon"></i>
+                  <span>博酒汇官方旗舰店</span>
+                </span>
+                <span class="promBox">
+                  <em class="prom" style="background-color:#ffa855">限时抢购</em>
+                  <em class="prom" style="background-color:#8888ff">多买多赠</em>
+                </span>
+              </p>
+            </div>
+            <div class="price"><strong>￥9.90</strong></div>
+            <div class="pro">
+              <span class="listIcon"></span> <span class="good"> 98% 好评</span><span class="good">1539评论</span>
+            </div>
+          </div>
+        </li>                                 
+      </ul>
+    </div>
+  </div>
+</template>
+    
+<script>
+//返回详情页面
+//history.back ()
+//$router.back()
+// vue 在子路由中，通过 this.$route.params.参数名来接受传递过来的值 不显示url
+export default {
+  name: "component_name",
+  data () {
+    return {
+        msg: 'sxn'
+    };
+  }
+}
+</script>   
+<style lang="css" scoped>
+/* 商品列表详细信息 */
+  .pro .listIcon{
+    width:38px;
+    height: 13px;
+    display:inline-block;
+    background-position:-62px -15px;
+    vertical-align: middle;
+  }
+  .pro .good{
+    color:#aaa;
+    font-size:12px;
+    margin-left:8px;
+  }
+  .price strong{
+    color:#fc5a5a;
+    font-weight:bold;
+    font-size:15px;
+    line-height:20px;
+  }
+  .prom{
+    height: 14px;
+    display:inline-block;
+    font-size:10px;
+    border-radius:2px;
+    padding:0 2px;
+    color:#fff;
+    font-style:normal;
+    margin-left:5px;
+  }
+  .prodInfo .sName i{
+    width:13px;
+    height: 13px;
+    display:inline-block;
+    background-position:-69px 1px;
+  }
+  .prodInfo .sName span{
+    font-size:12px;
+    color:#aaa;
+  }
+  .prodName{
+    height:56px;
+  }
+  .prodName .name{
+    line-height:22px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .prodName,.price,.pro{
+   text-align:left;
+  }
+  .content .prodInfo{
+    height:104px;
+    padding:0px 0 5px 10px;
+    border-bottom:1px solid #e8e8e8;
+    margin-left:110px;
+  }
+  .prodImg{
+    width:110px;
+    height: 110px;
+    display: block;
+    float:left;
+  }
+  .content li{
+    height:110px;
+    padding-top:5px;
+  }
+  /* tab菜单 */
+  .tabBar .tab.tab4 .line{
+    width:1px;
+    height: 19px;
+    border:1px #e8e8e8 solid;
+    display:inline-block;
+    float:left;
+    margin-top:10px;
+  }
+  .listIcon{
+    background:url(https://mlist.jiuxian.com/mjava_statics/images/listIcon.png);
+    background-size:100px 70px;
+  }
+  .tabBar .tab.tab4 .listIcon{
+    width:24px;
+    height:24px;
+    display:inline-block;
+    vertical-align:top;
+    background-position:0 -45px;
+    margin-top:8px;
+  }
+  .tabBar .tab .listIcon.prodPrice{
+    width:5px;
+    height: 8px;
+    display:inline-block;
+    vertical-align:top;
+    background-position: -23px 0;
+    margin:16px 0 0 5px;
+  }
+  .tabBar .tab.tab4{
+    width:20%;
+  }
+.tabBar .tab.first{
+  color:#fc5a5a;
+}
+.tabBar .tab{
+  width:25%;
+  height: 40px;
+  display:inline-block;
+  text-align:center;
+  color:#252525;
+}
+.tabBar{
+  width:100%;
+  height: 40px;
+  line-height:40px;
+  border-bottom:1px solid #e8e8e8;
+  margin-top:40px;
+}
+/* 顶部 */
+.head{
+  width:100%;
+  height: 0.4rem;
+  background-color:#de4943;
+  color:#fff;
+  position:relative;
+  clear:both;
+  z-index:1000;
+  position:fixed;
+  left: 0px;
+  top:0px;
+}
+.prev{
+  width:.3rem;
+  height: 0.4rem;
+  position: absolute;
+  top:0;
+  left:10px;
+  display:block;
+  background:url(https://m.jiuxian.com/mjava_statics/images/headBack.jpg);
+}
+.headTitle{
+  width:2.2rem;
+  margin-left:6%;
+  font-size:16px;
+  line-height:.4rem;
+  text-align:center;
+  position: absolute;
+  left:10%;
+  font-weight:normal;
+}
+.navbar{
+  width:0.8rem;
+  height: 0.4rem;
+  position: absolute;
+  top:0;
+  right: 10px;
+  display:block;
+  line-height:0.4rem;
+  color:#fff;
+  font-size:14px;
+}
+    
+</style>
