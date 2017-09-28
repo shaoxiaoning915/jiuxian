@@ -29,11 +29,7 @@ const routes =[
         { path:'/market', component: Market },
         { path:'/mine', component: Mine },
         { path:'/WineDetail', component: WineDetail},
-        { path:'/wine/:winesortId', component: Wine ,children:[
-            { path:'',component:Winelist},
-            { path:'winelist',component:Winelist },
-            { path:'winepic',component:Winepic },
-        ]}
+        { path:'/wine/:winesortId', component: Wine}
     ]
 //创建路由实例    
 const router = new VueRouter({

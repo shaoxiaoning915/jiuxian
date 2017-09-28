@@ -200,6 +200,9 @@ export default {
   font-size:14px;
 }
   /* 商品列表详细信息 */
+  .content a:link{
+    color:#000;
+  }  
 .content .aaa  .pro .listIcon{
     width:38px;
     height: 13px;
@@ -264,6 +267,7 @@ export default {
   }
 .content .aaa {
     display:flex;
+    flex-wrap: wrap;
   }
 .content .aaa  li{
     width:50%;
