@@ -44,9 +44,12 @@ h1{
   height: 60px;
   line-height:60px;
   display:flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
 }
 #app .tabbar a{
   text-decoration:none;
-  flex:1;
+  /* flex:1; */
 }
 </style>
