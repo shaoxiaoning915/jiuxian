@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-      <!-- <hello></hello> -->
-      <div class="tabbar"> 
+      <div class="tabbar" v-show="isShow()"> 
         <router-link to="/home">首页</router-link>
         <router-link to="/sorts">类别</router-link>
         <router-link to="/sesscions">主会场</router-link>
@@ -13,12 +12,16 @@
   </div>
 </template>
 <script>
-import Hello from './components/Hello'
 
 export default {
   name: 'app',
   components: {
-    Hello
+
+  },
+  methods:{
+    isShow(){
+      return this.$route.path.indexOf('/home') == -1 ? false : true;
+    }
   }
 }
 </script>
@@ -28,7 +31,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }

@@ -9,20 +9,37 @@ import Sesscions from '../pages/sesscions/Sesscions'
 import Sorts from '../pages/sorts/Sorts'
 import Market from '../pages/market/Market'
 import Mine from '../pages/mine/Mine'
+import Details from '../pages/sesscions/Details'
+import Comments from '../pages/sesscions/Comments'
 
 import UserLogin from '../pages/mine/UserLogin'
 import PhoneLogin from '../pages/mine/PhoneLogin'
+
+import AllEval from '../pages/sesscions/AllEval'
+import GoodEval from '../pages/sesscions/GoodEval'
+import MiddleEval from '../pages/sesscions/MiddleEval'
+import BadEval from '../pages/sesscions/BadEval'
+import HasPicEval from '../pages/sesscions/HasPicEval'
 const routes =[
         { path:'', component:Home },
         { path:'/home', component:Home },
         { path:'/sorts', component: Sorts },
-        { path:'/Sesscions', component: Sesscions },
+        { path:'/sesscions', component: Sesscions },
         { path:'/market', component: Market },
         { path:'/mine', component: Mine ,children:[
             {path:'', component:UserLogin},
             {path:'userLogin', component:UserLogin},
             {path:'phoneLogin', component:PhoneLogin}
-        ]}
+        ]},
+        { path:'/details', component: Details },
+        { path:'/comments', component: Comments,children:[
+            {path:'', component:AllEval},
+            {path:'allEval', component:AllEval},
+            {path:'goodEval', component:GoodEval},
+            {path:'middleEval', component:MiddleEval},
+            {path:'badEval', component:BadEval},
+            {path:'hasPicEval', component:HasPicEval}
+        ] },
     ]
 const router = new VueRouter({
     // 路由规则

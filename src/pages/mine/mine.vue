@@ -4,24 +4,25 @@
        <!-- 头部部分 -->
        <div class="publicHead" id="head">
             <div class="head clearBoth">
-                <a href="javascript:void(0)" class="back" ></a>
+                <router-link to="/home"><a href="javascript:void(0)" class="back" ></a></router-link>
                 <h2 class="headTitle">用户登录</h2>
-                <a class="navBar" href="javascript:void(0)"></a>
+                <a class="navBar" href="javascript:void(0)" @click="btnFn"></a>
             </div>
             <!-- 头部部分右边点击导航 -->
-            <ul class="nav on">
-                <li class="home">
+            <ul class="nav" v-show="flag">
+                <router-link to="/home"><li class="home">
                     <i></i>
                     <span>首页</span>
                     <a id="daohang_home" href="https://m.jiuxian.com/?from=topNav"></a>
                 </li>
-                <li class="topsearch"><i></i><span>搜索</span><a id="daohang_search" href="https://m.jiuxian.com/m_v1/search?from=topNav"></a></li>
-                <li class="cart"><i></i><span>购物车</span><a id="daohang_gouwuche" href="https://mcart.jiuxian.com/cart/info?from=topNav"></a></li>
-                <li class="commuser"><i></i><span>我的酒仙</span><a id="daohang_wodejiuxian" href="https://mmember.jiuxian.com/user?from=topNav"></a></li>
+                </router-link>
+                <router-link to="/sorts"><li class="topsearch"><i></i><span>搜索</span><a id="daohang_search" href="https://m.jiuxian.com/m_v1/search?from=topNav"></a></li></router-link>
+                <router-link to="/market"><li class="cart"><i></i><span>购物车</span><a id="daohang_gouwuche" href="https://mcart.jiuxian.com/cart/info?from=topNav"></a></li></router-link>
+                 <router-link to="/mine"><li class="commuser"><i></i><span>我的酒仙</span><a id="daohang_wodejiuxian" href="https://mmember.jiuxian.com/user?from=topNav"></a></li></router-link>
             </ul>
        </div> 
        <!-- 导航登录部分 -->
-       <section class="login" style="margin-top:40px">
+       <section class="login">
            <ul class="tab">
                <router-link to="/mine/userLogin">
                     <li class="tab1 on">
@@ -54,8 +55,14 @@ export default {
   name: "mine",
   data () {
     return {
-        pageName:"我是我的酒仙"
+        pageName:"我是我的酒仙",
+        flag:false
     };
+  },
+  methods:{
+      btnFn(){
+          this.flag = !this.flag; 
+      }
   }
 }
 </script>
@@ -129,7 +136,8 @@ export default {
         border-bottom: 1px solid #ccc;
         position: absolute;
         left: 0;
-        display: none;
+        text-align: center;
+        /* display: none; */
     }
     .nav li {
         width: 25%;
@@ -162,6 +170,7 @@ export default {
         max-width: 768px;
         margin: 40px auto 0;
         background: #fff;
+        margin-top: 40px;
     }
     a{
         color: #666;

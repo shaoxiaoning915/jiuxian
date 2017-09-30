@@ -4,27 +4,28 @@
        <!-- 头部部分 -->
        <div class="publicHead" id="head">
             <div class="head clearBoth">
-                <a href="javascript:void(0)" class="back" ></a>
+                <router-link to="/home"><a href="javascript:void(0)" class="back" ></a></router-link>
                 <h2 class="headTitle">主会场</h2>
-                <a class="navBar" href="javascript:void(0)"></a>
+                <a class="navBar" href="javascript:void(0)" @click="btnFn"></a>
             </div>
             <!-- 头部部分右边点击导航 -->
-            <ul class="nav on">
-                <li class="home">
+            <ul class="nav" v-show="flag">
+                <router-link to="/home"><li class="home">
                     <i></i>
                     <span>首页</span>
                     <a id="daohang_home" href="https://m.jiuxian.com/?from=topNav"></a>
                 </li>
-                <li class="topsearch"><i></i><span>搜索</span><a id="daohang_search" href="https://m.jiuxian.com/m_v1/search?from=topNav"></a></li>
-                <li class="cart"><i></i><span>购物车</span><a id="daohang_gouwuche" href="https://mcart.jiuxian.com/cart/info?from=topNav"></a></li>
-                <li class="commuser"><i></i><span>我的酒仙</span><a id="daohang_wodejiuxian" href="https://mmember.jiuxian.com/user?from=topNav"></a></li>
+                </router-link>
+                <router-link to="/sorts"><li class="topsearch"><i></i><span>搜索</span><a id="daohang_search" href="https://m.jiuxian.com/m_v1/search?from=topNav"></a></li></router-link>
+                <router-link to="/market"><li class="cart"><i></i><span>购物车</span><a id="daohang_gouwuche" href="https://mcart.jiuxian.com/cart/info?from=topNav"></a></li></router-link>
+                 <router-link to="/mine"><li class="commuser"><i></i><span>我的酒仙</span><a id="daohang_wodejiuxian" href="https://mmember.jiuxian.com/user?from=topNav"></a></li></router-link>
             </ul>
        </div> 
        <!-- 大背景颜色 start -->
        <div class="eleven" style="background-color:#061536" id="gotop">
             <!-- 下载App部分 -->
-            <div class="app-download" id="appdownload">
-                <a href="javascript:;" class="close">
+            <div class="app-download" id="appdownload" v-show="flag1">
+                <a href="javascript:;" class="close" @click="close">
                     <i class="close"></i>
                 </a>
                 <span class="add-logo"></span>
@@ -116,7 +117,7 @@
                 <ul class="clearBoth twoList2">
                     <li v-for="(item, index) in list1" :key=" item.id ">
                         <!-- 链接详情地址 -->
-                        <a href="https://m.jiuxian.com/m_v1/goods/view/31372" class="link"></a>
+                        <router-link to="/details"><a href="javascript:void(0)" class="link"></a></router-link>
                         <div class="pic">
                             <img :src="item.goods_thumb">
                         </div>
@@ -208,7 +209,9 @@ export default {
         url:'../static/column.json',
         list1:[],
         list2:[],
-        list3:[]
+        list3:[],
+        flag:false,
+        flag1:true
     };
   },
 // 我们会把网络请求的代码，放在这个钩子函数中
@@ -226,6 +229,14 @@ export default {
         },err => {
             console.log(err);
         });
+    },
+    methods:{
+        btnFn(){
+            this.flag = !this.flag;
+        },
+        close(){
+            this.flag1 = !this.flag1;
+        }
     }  
 }
 </script>
@@ -311,7 +322,11 @@ export default {
         border-bottom: 1px solid #ccc;
         position: absolute;
         left: 0;
-        display: none;
+        text-align: center;
+        /* display: none; */
+    }
+    a{
+        color: #848d96;
     }
     .nav li {
         width: 25%;
