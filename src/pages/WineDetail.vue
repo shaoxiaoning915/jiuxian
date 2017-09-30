@@ -3,7 +3,7 @@
         <!-- 头部部分 -->
        <div class="publicHead" id="head">
             <div class="head clearBoth">
-                <a href="javascript:void(0)" class="back" ></a>
+                <a href="javascript:void(0)" class="back"  @click="backFn"></a>
                 <h2 class="headTitle">商品详情</h2>
                 <a class="navBar" href="javascript:void(0)"></a>
             </div>
@@ -60,7 +60,7 @@
                 <p id="no_clubPrice">
                   <span class="price">
                     <em>￥</em>
-                    <b>159.00</b>
+                    <b>{{ detail.wine_price}}</b>
                   </span>
                 </p>
               </div>
@@ -192,19 +192,95 @@
               </ul>
           </div> 
           <!-- 商品评价end -->
+            <!-- 线 -->
+          <div class="line"></div>
+          <!-- 品牌介绍，只有酒仙网自营才显示 -->
+          <div class="detailsbd">
+              <ul class="pinBox">
+                  <li>
+                        <a href="https://mlist.jiuxian.com/m_v1/search/filter/2/4521/0/0/0/0/0/0/0/1/0/sale" class="clearBoth"><b class="pubIcon"></b> <img src="https://m.jiuxian.com/mjava_statics/images/goods/ziying.png" class="logoimg">
+                            <div class="pinInfoBox">
+                                <div class="pinInfo">
+                                    <p style="text-align:left;">
+                                        澳丽庄园
+                                        <strong></strong>
+                                        <img src="https://m.jiuxian.com/mjava_statics/images/goods/jxzy.png" class="jxzy">
+                                    </p>
+                                    <div class="pinInfoTxt"></div>
+                                </div>
+                            </div> 
+                        </a>
+                  </li>
+              </ul>
+          </div>
+            <!-- 线 -->
+          <div class="line"></div>
+          <!-- 店铺介绍 -->
+          <div class="showConFrame">
+              <div class="showCon showCon1" id="showCon1_goods">
+                  <div class="prodIntro clearBoth"></div>
+                  <div class="prodDet">
+                        <p class="detialTit">
+                            <i></i>温馨提示
+                        </p>
+                        <p>
+                            根据新修订的《商标法》及国家工商总局最新文件要求，2014年5月1日之后不得将“驰名商标”字样用于商品宣传，酒仙网依法对商品图片中含“驰名商标”字样做马赛克处理；同时，涉及厂家正在按照新规定逐步更换包装，在此期间，我们将对新旧包装货品随机发货，请以实际收到的货物为准。给您带来的不便，敬请谅解。
+                        </p>
+                  </div>
+                  <div class="prodDet">
+                        <p class="detialTit">
+						    <i></i>商品特点
+					    </p>
+                        <div class="detailImg" style="text-align:center">
+                            <img src="http://img10.jiuxian.com/bill/2017/0602/de7937469e2447c9922988415218eaa5.jpg">
+                        </div>
+                  </div>
+              </div>
+          </div>
        </div> 
    </div>
 </template>
     
 <script>
 export default {
-  name: "component_name",
-  data () {
-    return {
-        // msg: 'sxn'
-    };
-  }
+    name: "component_name",
+    data () {
+        return {
+            // msg: 'sxn'
+            url:'../static/winesortlist2.json',
+           winedetail:[],
+        };
+    },
+    methods:{
+        backFn(){
+        this.$router.go(-1);
+        }
+    },
+    created(){
+        this.$http.get(this.url).then(res =>{
+            this.winedetail = res.body.winelist2;
+            // console.log(res.body.winelist2);
+            console.log(this.winedetail);
+        },err =>{
+            console.log(err);
+        })
+    },
+    computed:{
+       detail(){
+        //    获取声明式传值参数
+           console.log(this.$route.params.wineId);
+           console.log(this.winedetail);
+           for(var item of this.winedetail){
+               if(this.$route.params.wineId == item.wineId){
+                  return item;
+                //   console.log(item); 
+               }
+           }
+           return {wine_price:''}
+       }
+    }
 }
+
 </script>
     
 <style lang="css" scoped>
@@ -788,4 +864,104 @@ export default {
       transform: translate(-50%, -50%);
       z-index: 2;
   }
+  /* 自营 */
+ .pinBox{
+     width: 100%;
+ }
+ .pinBox li {
+    padding: 0 10px;
+    position: relative;
+    height: 44px;
+    overflow: hidden;
+    width: 100%;
+}
+.pinBox li b {
+    background-position: -130px -40px;
+    width: 10px;
+    height: 13px;
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    top: 45%;
+    right: 20px;
+}
+.pinBox .logoimg {
+    width: 84px;
+    height: 38px;
+    display: inline-block;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    position: absolute;
+    top: 6px;
+    left: 0;
+}
+.pinBox .pinInfoBox {
+    margin: 0 10px 0 84px;
+    overflow: hidden;
+}
+.pinBox .pinInfo {
+    line-height: 22px;
+    color: #252525;
+    font-size: 12px;
+    display: inline-block;
+    padding-top: 4px;
+    overflow: hidden;
+    width: 97%;
+}
+.pinBox .pinInfo em, .pinBox .pinInfo strong {
+    color: #999;
+    padding-left: 4px;
+    font-weight: normal;
+}
+.pinBox .jxzy {
+    position: relative;
+    border-radius: 0;
+    width: 38px;
+    height: 13px;
+    left: 5px;
+    top: 3px;
+    margin: 2px 0 0;
+}
+.pinBox .pinInfo .pinInfoTxt {
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* 店铺介绍 */
+.showCon{
+    padding: 10px;
+    color: #848484;
+    max-width: 780px;
+    margin: 0 auto;
+}
+.prodDet{
+    margin-bottom: 10px;
+}
+.detialTit {
+    height: 24px;
+    line-height: 24px;
+    background: url(https://m.jiuxian.com/mjava_statics/images/prodInfoBg.jpg) 0 0 repeat-x;
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.detialTit i {
+    float: left;
+    height: 8px;
+    width: 8px;
+    overflow: hidden;
+    background: #b00000;
+    margin: 8px 8px 0 0;
+}
+p{
+    text-align: left;
+}
+.showCon .detailImg img {
+    width: 100%!important;
+    height: auto!important;
+}
 </style>

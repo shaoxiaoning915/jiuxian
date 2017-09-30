@@ -1,12 +1,12 @@
 <template>
   <div id="sorts">
-    <div id="head">
-      <div class="head">
+    <div id="head" class="publicHead">
+      <div class="head clearfix">
         <a href="javascript:void(0)" class="prev" @click="backFn"></a>
         <h2 class="headTitle">选酒</h2>
         <a href="javascript:void(0)" class="navbar" @click="showbar()"></a>
       </div>
-      <ul class="nav">
+      <ul class="nav" :class="{on:flag}">
           <li class="home"><i></i><span>首页</span></li>
           <li class="home"><i></i><span>首页</span></li>
           <li class="home"><i></i><span>首页</span></li>
@@ -36,6 +36,7 @@ export default {
   data () {
     return{
       winelist:[],
+      flag:false,
       url:'../static/winesortlist.json'
     }
   },
@@ -51,11 +52,18 @@ export default {
           winesortId
         }
       })
-    },  
+    }, 
+    showbar(){
+      if(this.flag){
+        this.flag = false;
+      }else{
+        this.flag= true;
+      }
+    } 
   },
   created(){
     this.$http.get(this.url).then(res =>{
-      // console.log(res,this);
+      console.log(res,this);
       this.winelist =res.body.winelist;
     },err =>{
       console.log(err);
@@ -66,6 +74,18 @@ export default {
 </script>
     
 <style lang="css" scoped>
+   .publicHead {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+  }
+  .head {
+    height: 40px;
+    background-color: #de4943;
+    color: #fff;
+  }
     #sorts{
       margin-top:40px;
     }
@@ -99,6 +119,7 @@ export default {
       height: 80px;
       border:1px solid #f6f6f6;
       border-left:none;
+      text-align:center;
     }
     .search{
       width:90%;
@@ -126,12 +147,6 @@ export default {
       background-color:#de4943;
       float:left;
       color:#fff;
-    }
-    #head{
-      width:100%;
-      position: fixed;
-      left: 0;
-      top:0;
     }
     .head{
       width:100%;
@@ -170,13 +185,22 @@ export default {
       display:block;
       background:url(https://m.jiuxian.com/mjava_statics/images/headIcon.png) -150px 6px;
     }
-    .nav{
-      width:100%;
-      height: 0.45rem;
-      background-color:#efefef;
-      border-bottom:1px solid #ccc;
-      display:none;
-    }
+  .nav {
+    height: 45px;
+    background-color: #efefef;
+    color: #848d96;
+    top: 40px;
+    border-bottom: 1px solid #ccc;
+    display: none;
+  }
+  .nav.on {
+    height: 45px;
+    background-color: #efefef;
+    color: #848d96;
+    top: 40px;
+    border-bottom: 1px solid #ccc;
+    display: block;
+  }
     .nav li{
       flex:1;
       width:25%;

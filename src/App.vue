@@ -15,7 +15,12 @@ export default {
   },
   methods:{
     isShowTabBarFn() {
-      return this.$route.path.indexOf('/sorts') == -1 ? true : false;
+      return this.$route.path.indexOf('') == -1 ? false : true ;
+      // if(this.$route.path.indexOf('') || this.$route.path.indexOf('/home')){
+      //   return true;
+      // }else{
+      //   return false;
+      // }
     }
   }
 }
@@ -27,8 +32,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 </style>

@@ -12,14 +12,33 @@ import Sesscions from '../pages/sesscions/Sesscions'
 import Sorts from '../pages/sorts/Sorts'
 import Market from '../pages/market/Market'
 import Mine from '../pages/mine/Mine'
+
+// 酒类组件
+import Baijiu from '../pages/home/type/Baijiu'
+import Putaojiu from '../pages/home/type/putaojiu'
+import Yangjiu from '../pages/home/type/yangjiu'
+import Laojiu from '../pages/home/type/laojiu'
+import Nianfen from '../pages/home/type/nianfen'
+import Club from '../pages/home/type/club'
+
+import Qincang from '../pages/home/type/qincang'
+import Xinpin from '../pages/home/type/xinpin'
+import Jinxuan from '../pages/home/type/jinxuan'
 //导入商品列表组件
 import Wine from '../pages/sorts/Wine'
-//导入综合列表组件
-import Winelist from '../pages/sorts/Winelist'
-//导入多图列表组件
-import Winepic from '../pages/sorts/Winepic'
 //导入详情列表组件
 import WineDetail from '../pages/WineDetail'
+import Details from '../pages/sesscions/Details'
+import Comments from '../pages/sesscions/Comments'
+
+import UserLogin from '../pages/mine/UserLogin'
+import PhoneLogin from '../pages/mine/PhoneLogin'
+
+import AllEval from '../pages/sesscions/AllEval'
+import GoodEval from '../pages/sesscions/GoodEval'
+import MiddleEval from '../pages/sesscions/MiddleEval'
+import BadEval from '../pages/sesscions/BadEval'
+import HasPicEval from '../pages/sesscions/HasPicEval'
 //配置路由规则
 const routes =[
         { path:'', component:Home },
@@ -27,9 +46,32 @@ const routes =[
         { path:'/sorts', component: Sorts},
         { path:'/Sesscions', component: Sesscions },
         { path:'/market', component: Market },
-        { path:'/mine', component: Mine },
-        { path:'/WineDetail', component: WineDetail},
-        { path:'/wine/:winesortId', component: Wine}
+        { path:'/mine', component: Mine ,children:[
+            {path:'', component:UserLogin},
+            {path:'userLogin', component:UserLogin},
+            {path:'phoneLogin', component:PhoneLogin}
+        ]},
+        // 首页
+        { path:'/baijiu', component: Baijiu },
+        { path:'/putaojiu', component: Putaojiu },
+        { path:'/yangjiu', component: Yangjiu },
+        { path:'/laojiu', component: Laojiu },
+        { path:'/nianfen', component: Nianfen },
+        { path:'/club', component: Club },
+        { path:'/qincang', component: Qincang },
+        { path:'/xinpin', component: Xinpin },
+        { path:'/jinxuan', component: Jinxuan },
+        // 分类
+        { path:'/WineDetail/:wineId', component: WineDetail},
+        { path:'/wine/:winesortId', component: Wine},
+        { path:'/comments', component: Comments,children:[
+            {path:'', component:AllEval},
+            {path:'allEval', component:AllEval},
+            {path:'goodEval', component:GoodEval},
+            {path:'middleEval', component:MiddleEval},
+            {path:'badEval', component:BadEval},
+            {path:'hasPicEval', component:HasPicEval}
+        ] }
     ]
 //创建路由实例    
 const router = new VueRouter({

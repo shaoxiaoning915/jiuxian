@@ -24,20 +24,15 @@
     </div>
     <div class="content">
      <ul :class="changeclass">
-        <!-- 综合组件 -->
           <li v-for="(item,index) in white" :key="item.id">
+          <router-link :to="'/WineDetail/' + item.wineId" class="goodlist">
             <img class="prodImg" :src="item.pic">
             <div class="prodInfo">
               <div class="prodName">
                 <p class="name"><a href="javascript:;">{{ item.wine_name }}</a></p>
                 <p class="nameAndPro">
-                  <!-- <span class="sName">
-                    <i class="listIcon"></i>
-                    <span></span>
-                  </span> -->
                   <span class="promBox">
-                    <em class="prom" style="background-color:#8888ff">满赠</em>
-                    <!-- <em class="prom" style="background-color:#8888ff">多买多赠</em> -->
+                    <em class="prom" style="background-color:#8888ff">满赠{{ item.wineId }}</em>
                   </span>
                 </p>
               </div>
@@ -46,6 +41,7 @@
                 <span class="listIcon"></span> <span class="good"> {{ item.wine_good }} 好评</span><span class="good">{{ item.wine_discuss }}评论</span>
               </div>
             </div>
+        </router-link>  
           </li> 
       </ul>
     </div>
@@ -73,10 +69,10 @@ export default {
     backFn(){
       this.$router.go(-1);
     },
+    
   },
   created(){
     this.$http.get(this.url).then(res =>{
-    //   console.log(res,this);
       this.winelist = res.body.winelist;
     },err =>{
       console.log(err);
@@ -91,10 +87,6 @@ export default {
         }
       }
     },
-    url1(){
-      console.log(this.$route.path)
-      return this.$route.path.indexOf('winepic')>=0 ? '/wine/1001/winelist' : '/wine/1001/winepic' 
-    },
     changeclass(){
       return this.flag ? 'aaa' : '' ;
     }
@@ -102,6 +94,9 @@ export default {
 }
 </script>   
 <style lang="css" scoped>
+  .goodlist{
+    width:100%;
+  }
   /* tab菜单 */
   .tabBar .tab.tab4 .line{
     width:1px;
@@ -271,7 +266,8 @@ export default {
   }
 .content .aaa  li{
     width:50%;
-    flex:1;
+    /* flex:1; */
+    float:left;
     height:auto;
     padding:20px 5px 10px;
     border:2px solid #f3f5f6;
