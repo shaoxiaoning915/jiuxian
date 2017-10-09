@@ -7,10 +7,15 @@ Vue.use(VueRouter);
 
 //分别导入四个组件
 // 导入组件
+// 首页
 import Home from '../pages/home/Home'
+// 主会场
 import Sesscions from '../pages/sesscions/Sesscions'
+// 分类
 import Sorts from '../pages/sorts/Sorts'
+// 购物车
 import Market from '../pages/market/Market'
+// 我的酒仙
 import Mine from '../pages/mine/Mine'
 
 // 酒类组件
@@ -25,7 +30,8 @@ import Qincang from '../pages/home/type/qincang'
 import Xinpin from '../pages/home/type/xinpin'
 import Jinxuan from '../pages/home/type/jinxuan'
 //导入商品列表组件
-import Wine from '../pages/sorts/Wine'
+// 白酒组件
+import Whitewine from '../pages/sorts/Whitewine'
 //导入详情列表组件
 import WineDetail from '../pages/WineDetail'
 import Details from '../pages/sesscions/Details'
@@ -43,7 +49,9 @@ import HasPicEval from '../pages/sesscions/HasPicEval'
 const routes =[
         { path:'', component:Home },
         { path:'/home', component:Home },
-        { path:'/sorts', component: Sorts},
+        { path:'/sorts', component: Sorts, children:[
+            {path:'/sorts/Whitewine/:index',component:Whitewine}
+        ]},
         { path:'/Sesscions', component: Sesscions },
         { path:'/market', component: Market },
         { path:'/mine', component: Mine ,children:[
@@ -63,7 +71,8 @@ const routes =[
         { path:'/jinxuan', component: Jinxuan },
         // 分类
         { path:'/WineDetail/:wineId', component: WineDetail},
-        { path:'/wine/:winesortId', component: Wine},
+        //详情
+        { path:'/details', component: Details },
         { path:'/comments', component: Comments,children:[
             {path:'', component:AllEval},
             {path:'allEval', component:AllEval},

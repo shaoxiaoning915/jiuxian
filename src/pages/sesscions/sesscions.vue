@@ -242,12 +242,6 @@ export default {
 </script>
     
 <style lang="css" scoped>
-    /* #main h1{
-        color:blueviolet;
-    } */
-    #main{
-        padding-bottom: 0.4rem;
-    }
     /* 清除浮动 */
     .clearBoth:after{
         clear: both;

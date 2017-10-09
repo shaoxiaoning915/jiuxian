@@ -12,7 +12,8 @@
        </nav>
        <!-- 轮播图 -->
        <div class="lunbo">
-           <div><img src="./imgs/1.jpg" alt=""></div>
+           <!-- <div><img src="./imgs/1.jpg" alt=""></div> -->
+           <lunbo></lunbo>
        </div>
        <!-- 酒类 -->
         <div class="type">
@@ -213,6 +214,8 @@
 </template>
   
 <script>
+//轮播
+import Lunbo from './lunbo.vue'
 export default {
   name: "home",
   data () {
@@ -224,12 +227,15 @@ export default {
  
     };
   },
+  components:{
+      Lunbo
+  },
     created(){
         this.$http.get(this.url).then(res =>{this.list = res.body.promoList;}),err =>{console.log(err);}
         this.$http.get(this.url2).then(res =>{this.list2 = res.body.killProList ;}),err =>{console.log(err);}
     }
 }
-console.log(this.list);
+// console.log(this.list);
 </script>
     
 <style lang="css" scoped>

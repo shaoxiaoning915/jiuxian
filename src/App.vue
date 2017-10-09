@@ -1,7 +1,7 @@
 <template>
   <div id="app">
       <!-- <hello></hello> -->
-      <tab-bar v-show="isShowTabBarFn()"></tab-bar>
+      <tab-bar v-show="isShowTabBarFn"></tab-bar>
       <!-- 使用router-view组件 标签 进行组件显示 -->  
       <router-view></router-view>
   </div>
@@ -14,18 +14,15 @@ export default {
     TabBar
   },
   methods:{
-    isShowTabBarFn() {
-      return this.$route.path.indexOf('') == -1 ? false : true ;
-      // if(this.$route.path.indexOf('') || this.$route.path.indexOf('/home')){
-      //   return true;
-      // }else{
-      //   return false;
-      // }
-    }
+  },
+  computed:{
+     isShowTabBarFn(){
+      //  console.log(this.$route.path)
+       return this.$route.path == '/' || this.$route.path == '/home'
+     }
   }
 }
 </script>
-
 <style>
 @import '../static/css/reset.css';
 #app {

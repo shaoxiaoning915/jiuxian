@@ -1,34 +1,48 @@
 <template>
   <div id="sorts">
-    <div id="head" class="publicHead">
-      <div class="head clearfix">
-        <a href="javascript:void(0)" class="prev" @click="backFn"></a>
-        <h2 class="headTitle">选酒</h2>
-        <a href="javascript:void(0)" class="navbar" @click="showbar()"></a>
-      </div>
-      <ul class="nav" :class="{on:flag}">
-          <li class="home"><i></i><span>首页</span></li>
-          <li class="home"><i></i><span>首页</span></li>
-          <li class="home"><i></i><span>首页</span></li>
-          <li class="home"><i></i><span>首页</span></li>
-      </ul>
-    </div>
-    <div class="top">
-      <div class="search">
-         <input type="text" class="drink" placeholder="飞天茅台">
-         <input type="button"  class="ss" value="搜索">
-      </div>
-    </div>
-    <div class="contentFrame">
-      <ul class="list">
-        <li class="bj first" v-for="(item,index) in winelist" :key="item.id">
-          <router-link :to="'/wine/'+ item.winesortId">
-              <i></i>
-              <span>{{ item.winesortName}}</span>
-          </router-link>
+    <header id="header" v-show="showFlag">
+			<section class="top">
+				<a href="javascript:;" onclick="javascript:history.back(-1)" class="goback"></a>
+				<h4>选酒</h4>
+				<a href="javascript:;" class="menus" @click="showbar()"></a>
+			</section>
+			<ul class="list-menu" v-show="flag">
+				<li><a href="javascript:void(0)"><i></i><p>首页</p></a></li>
+				<li><a href="javascript:void(0)"><i></i><p>搜索</p></a></li>
+				<li><a href="javascript:void(0)"><i></i><p>购物车</p></a></li>
+				<li><a href="javascript:;"><i></i><p>我的酒仙</p></a></li>
+			</ul>
+			<section class="search">
+				<div class="search-box">
+					<input type="text" id="text" @focus="showsearch()" placeholder="飞天茅台"/>
+					<input type="button" value="搜索" id="search"/>
+				</div>
+			</section>
+		</header>
+		<section id="content" v-show="showFlag">
+			<ul class="list-intro" v-show="type == 'nav'">
+        <li v-for="(item,index) in list1" :key="item.id">
+          <router-link :to="'/sorts/Whitewine/'+ index"><i></i><p> {{ item }}</p></router-link>
         </li>
-      </ul>
-    </div>
+        <li v-for="(item,index) in list2" :key="item.id">
+          <a href="javascript:void(0)"><i></i><p>{{ item }}</p></a>
+        </li>
+			</ul>
+			<section class="search-focus" v-show="type == 'search'">
+				<p>热门搜索:</p>
+				<ul class="search-list">
+					<li><a href="javascript:void(0)">茅台</a></li>
+					<li><a href="javascript:void(0)">五粮液</a></li>
+					<li><a href="javascript:void(0)">泸州老窖</a></li>
+					<li><a href="javascript:void(0)">剑南春</a></li>
+					<li><a href="javascript:void(0)">酒鬼酒</a></li>
+					<li><a href="javascript:void(0)">威士忌</a></li>
+					<li class="last"><a href="javascript:void(0)">拉菲</a></li>					
+				</ul>
+			</section>
+      <div class="bg" v-show="type == 'search'" @click="change()"></div>
+		</section>
+    <router-view></router-view>
   </div>  
 </template>   
 <script>
@@ -37,194 +51,272 @@ export default {
     return{
       winelist:[],
       flag:false,
-      url:'../static/winesortlist.json'
+      type:'nav',
+      list1:['白酒','葡萄酒','洋酒'],
+      list2:['整箱购','老酒','清仓特卖',
+      '海外直采','精美大坛','红酒整箱','值得买','销量排行','礼尚往来']
     }
   },
   methods:{
     backFn(){
       this.$router.go(-1);
     },
-    pushFn(winesortId){
-      // this.$router.push('/wine/' + winesortId)
-      this.$router.push({
-        path:'/wine/winesortId',
-        query:{
-          winesortId
-        }
-      })
-    }, 
     showbar(){
-      if(this.flag){
-        this.flag = false;
-      }else{
-        this.flag= true;
-      }
+      this.flag = !this.flag;
+    },
+    showsearch(){
+      this.type = 'search';
+    },
+    change(){
+      this.type = 'nav';
     } 
   },
-  created(){
-    this.$http.get(this.url).then(res =>{
-      console.log(res,this);
-      this.winelist =res.body.winelist;
-    },err =>{
-      console.log(err);
-    })
+  computed: {
+    showFlag(){
+      return this.$route.path == '/sorts'
+    }
   }
-  
 }
-</script>
-    
-<style lang="css" scoped>
-   .publicHead {
-    position: fixed;
-    width: 100%;
-    left: 0;
-    top: 0;
-    z-index: 1000;
-  }
-  .head {
-    height: 40px;
-    background-color: #de4943;
-    color: #fff;
-  }
-    #sorts{
-      margin-top:40px;
-    }
-    .contentFrame{
-      width:100%;
-      margin: 0 auto;
-    }
-    .contentFrame .list li span{
-      text-align:center;
-    }
-    .contentFrame .list li:nth-child(1) i{
-      background-position: 0 0;
-    }
-    .contentFrame .list li:nth-child(2) i{
-      background-position: -84px 0px;
-    }
-    .contentFrame .list li:nth-of-type(3) i{
-      background-position: -165px 1px;
-    }
-    .contentFrame li i{
-      width:36px;
-      height: 36px;
-      display: block;
-      margin:10px auto;
-      display:block;
-      background:url(https://m.jiuxian.com/mjava_statics/images/selectIcon0314.png);
-    }
-    .contentFrame li{
-      float:left;
-      width:33.3%;
-      height: 80px;
-      border:1px solid #f6f6f6;
-      border-left:none;
-      text-align:center;
-    }
-    .search{
-      width:90%;
-      margin:auto;
-      display:flex;
-    }
-    .search input{
-      border:none;
-      outline:none;
-      vertical-align:middle;
-      margin-top:10px;
-    }
-    .search .drink{
-      width:75%;
-      height:30px;
-      padding:10px;
-      float:left;
-      flex:1;
-    }
-    .search .ss{
-      width:70px;
-      height:30px;
-      line-height:30px;
-      text-align:center;
-      background-color:#de4943;
-      float:left;
-      color:#fff;
-    }
-    .head{
-      width:100%;
-      height: 0.4rem;
-      background-color:#de4943;
-      color:#fff;
-      position:relative;
-      clear:both;
-      z-index:1000;
-    }
-    .prev{
-      width:.3rem;
-      height: 0.4rem;
-      position: absolute;
-      top:0;
-      left:10px;
-      display:block;
-      background:url(https://m.jiuxian.com/mjava_statics/images/headBack.jpg);
-    }
-    .headTitle{
-      width:2.2rem;
-      margin-left:6%;
-      font-size:16px;
-      line-height:.4rem;
-      text-align:center;
-      position: absolute;
-      left:10%;
-      font-weight:normal;
-    }
-    .navbar{
-      width:0.3rem;
-      height: 0.4rem;
-      position: absolute;
-      top:0;
-      right: 10px;
-      display:block;
-      background:url(https://m.jiuxian.com/mjava_statics/images/headIcon.png) -150px 6px;
-    }
-  .nav {
-    height: 45px;
-    background-color: #efefef;
-    color: #848d96;
-    top: 40px;
-    border-bottom: 1px solid #ccc;
-    display: none;
-  }
-  .nav.on {
-    height: 45px;
-    background-color: #efefef;
-    color: #848d96;
-    top: 40px;
-    border-bottom: 1px solid #ccc;
+</script>   
+<style lang="css" scoped>	
+input{
+  border:none;
+  outline:none;
+}
+a:link{
+color:#000;
+}
+#header{
+	width:100%;
+	height:auto;
+	font-size:14px;
+}
+#header .top{
+	width:100%;
+	height:40px;
+	background:#de4943;
+}
+#header .top a.goback{
+	display:block;
+	width:30px;
+	height:40px;
+	background:#de4943 url(../img/headBack.jpg) center center no-repeat;
+	margin:0 10px;
+	float:left;
+}
+#header .top h4{
+	width:70%;
+	height:40px;
+	line-height:40px;				
+	text-align:center;
+	float:left;
+	color:#fff;
+	margin-left:5px;
+}
+#header .top a.menus{
+	display:block;
+	float:right;
+	width:20px;
+	height:20px;
+	margin:10px 10px;
+	background:url(../img/headIcon.png) -155px -5px no-repeat;
+}
+#header .list-menu{
+	width:100%;
+	height:45px;
+	background:#efefef;
+	/* display:none; */
+}
+#header .list-menu li{
+	width:25%;
+	height:100%;
+	float:left;
+}
+#header .list-menu li a{
+	display:block;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+#header .list-menu li:nth-child(1) a i{
+	display:block;
+	width:26px;
+	height:20px;
+	margin:0 auto;
+	margin-top:5px;
+	background:url(../img/headIcon.png) -3px -5px no-repeat;
+}
+#header .list-menu li:nth-child(2) a i{
+	display:block;
+	width:26px;
+	height:20px;
+	margin:0 auto;
+	margin-top:5px;
+	background:url(../img/headIcon.png) -36px -5px no-repeat;
+}
+#header .list-menu li:nth-child(3) a i{
+	display:block;
+	width:26px;
+	height:20px;
+	margin:0 auto;
+	margin-top:5px;
+	background:url(../img/headIcon.png) -74px -5px no-repeat;
+}
+#header .list-menu li:nth-child(4) a i{
+	display:block;
+	width:26px;
+	height:20px;
+	margin:0 auto;
+	margin-top:5px;
+	background:url(../img/headIcon.png) -112px -5px no-repeat;
+}
+#header .list-menu li a p{
+	width:100%;
+	height:20px;
+	font-size:12px;
+	line-height:20px;
+	text-align:center;
+}
+#header .search{
+	width:100%;
+	height:50px;
+	background:#e2e2e2;
+	overflow:hidden;
+}
+#header .search .search-box{
+	width:88%;
+	height:30px;
+	margin:10px auto;
+	background:#fff;
+}
+#header .search .search-box input{
+	height:30px;
+}
+#text{
+	width:73%;
+	background:#fff;
+	padding-left:15px;
+	font-size:15px;
+}
+#search{
+	width:20%;
+	background:#de4943;
+	float:right;
+  color:#fff;
+}
+#content{
+	width:100%;
+	height:80%;
+	background:#fff;
+}
+#content ul.list-intro{
+	width:100%;
+}
+#content ul.list-intro li{
+	width:33.3%;
+	height:80px;
+	border-right: 1px solid #f6f6f6;
+	border-bottom: 1px solid #f6f6f6;
+	float:left;
+}
+#content ul li a{
+	display:block;
+	width:100%;
+	height:80px;
+	overflow:hidden;
+}
+#content ul li a p{
+	font-size:12px;
+	text-align:center;
+	width:100%;
+	height:24px;
+	line-height:24px;
+}
+#content ul li a i{
+	display:block;
+	width:36px;
+	height:36px;
+	margin:10px auto;
+	background:url(../img/selectIcon0314.png) no-repeat;
+}
+#content ul li:nth-child(1) a i{				
+	background-position:0 0;
+}
+#content ul li:nth-child(2) a i{				
+	background-position:-84px 0px;
+}
+#content ul li:nth-child(3) a i{				
+	background-position:-165px 1px;
+}
+#content ul li:nth-child(4) a i{				
+	background-position:0 -70px;
+}
+#content ul li:nth-child(5) a i{				
+	background-position:-84px -70px;
+}
+#content ul li:nth-child(6) a i{				
+	background-position:-165px -70px;
+}
+#content ul li:nth-child(7) a i{				
+	background-position:0 -141px;
+}
+#content ul li:nth-child(8) a i{				
+	background-position:-84px -141px;
+}
+#content ul li:nth-child(9) a i{				
+	background-position:-165px -141px;
+}
+#content ul li:nth-child(10) a i{				
+	background-position:0 -217px;
+}
+#content ul li:nth-child(11) a i{				
+	background-position:-84px -218px;
+}
+#content ul li:nth-child(12) a i{				
+	background-position:-165px -217px;
+}
+
+#content .search-focus{
+	width:100%;
+	height:auto;
+	background:#fff;
+	/* display:none; */
+	overflow:hidden;
+}
+#content .search-focus p{
+	display:inline-block;
+	width:20%;
+	margin-left:10px;
+	height:40px;
+	line-height:40px;
+	font-size:14px;
+	background:#fff;
+	float:left;
+}
+#content .search-focus ul.search-list{
+	width:70%;
+	height:100%;
+	float:left;
+}
+#content .search-focus ul.search-list li{
+	width: auto;
+    height: 20px;
+    font-size:13px;
+    line-height: 20px;
+    padding: 0 10px;
+    margin: 12px 0 0 10px;
+    border: 1px solid #c6c6c6;
+    border-radius: 2px;
     display: block;
-  }
-    .nav li{
-      flex:1;
-      width:25%;
-      position:relative;
-      float:left;
-    }
-    .nav li i{
-      width:26px;
-      height:20px;
-      display: block;
-      margin:auto;
-      background:url(https://m.jiuxian.com/mjava_statics/images/headIcon.png) -3px -5px;
-    }
-    .nav li span{
-      width:auto;
-      height: 18px;
-      line-height:18px;
-      text-align:center;
-      display:block;
-    }
-    .top{
-      clear:both;
-      width:100%;
-      height: 50px;
-      background-color:#e2e2e2;
-    }
+    float: left;
+    position: relative;
+}
+#content .search-focus ul.search-list li.last{
+	margin-bottom:10px;
+}
+.bg{
+  width:100%;
+  height: 500px;
+  background-color:#c6c6c6;
+}
 </style>

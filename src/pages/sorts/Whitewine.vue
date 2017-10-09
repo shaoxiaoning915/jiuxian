@@ -24,21 +24,21 @@
     </div>
     <div class="content">
      <ul :class="changeclass">
-          <li v-for="(item,index) in white" :key="item.id">
+          <li v-for="(item,index) in winelist" :key="item.id">
           <router-link :to="'/WineDetail/' + item.wineId" class="goodlist">
-            <img class="prodImg" :src="item.pic">
+            <img class="prodImg" :src="item.commonProductInfo.imgPath">
             <div class="prodInfo">
               <div class="prodName">
-                <p class="name"><a href="javascript:;">{{ item.wine_name }}</a></p>
+                <p class="name"><a href="javascript:;">{{ item.commonProductInfo.pname }}</a></p>
                 <p class="nameAndPro">
                   <span class="promBox">
-                    <em class="prom" style="background-color:#8888ff">满赠{{ item.wineId }}</em>
+                    <em class="prom" style="background-color:#8888ff">满赠</em>
                   </span>
                 </p>
               </div>
-              <div class="price"><strong>￥{{ item.wine_price }}</strong></div>
+              <div class="price"><strong>￥{{ item.commonProductInfo.jxPrice }}</strong></div>
               <div class="pro">
-                <span class="listIcon"></span> <span class="good"> {{ item.wine_good }} 好评</span><span class="good">{{ item.wine_discuss }}评论</span>
+                <span class="listIcon"></span> <span class="good">  98% 好评</span><span class="good">1707评论</span>
               </div>
             </div>
         </router-link>  
@@ -58,7 +58,7 @@ export default {
   data () {
     return {
       flag:false,
-      url:'../static/winesortlist.json',
+      // url:'../static/baijiu.json',
       winelist:[]
     };
   },
@@ -72,23 +72,24 @@ export default {
     
   },
   created(){
-    this.$http.get(this.url).then(res =>{
-      this.winelist = res.body.winelist;
+      this.$http.get(this.url).then(res =>{
+      this.winelist = res.body.promoList;
+      // console.log(this.winelist);
     },err =>{
       console.log(err);
     })
   },
   computed:{
-    white(){
-      // return this.$route.params.winesortId;
-      for(var item of this.winelist){
-        if(this.$route.params.winesortId == item.winesortId){
-            return item.wine_list;
-        }
-      }
-    },
     changeclass(){
       return this.flag ? 'aaa' : '' ;
+    },
+    url(){
+      console.log(this.$route.params.index)
+      switch(this.$route.params.index){
+        case '0' : return '../../static/baijiu.json';
+        case '1' : return '../../static/putaojiu.json'
+        case '2' : return '../../static/yangjiu.json'
+      }
     }
    } 
 }

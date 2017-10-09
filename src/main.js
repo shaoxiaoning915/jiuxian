@@ -7,6 +7,9 @@ Vue.config.productionTip = false
 import router from './router'
 // 导入resource模块
 import resource from 'vue-resource'
+
+import swiper from "../static/javascript/swiper.min"
+
 Vue.use(resource)
 /* eslint-disable no-new */
 new Vue({

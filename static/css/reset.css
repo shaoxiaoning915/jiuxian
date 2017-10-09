@@ -6,8 +6,7 @@
       }
       body{
         font-size: .12rem;
-        font-family: "华文细黑","Microsoft YaHei","黑体",sans-serif;
-        padding-bottom:.70rem;
+        font-family: "华文细黑","Microsoft YaHei","黑体",sans-serif
       }
       ul,ol{
         list-style: none;
@@ -39,30 +38,4 @@
       html{
         font-size: 100px;
       }
-
-      /* 全局样式 */
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        html{
-            font-size: 100px;
-            display: block;
-        }
-        body{
-            font-family: 微软雅黑;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #666;
-        }
-        img{
-            vertical-align: top;
-            border: 0;
-        }
-        ul{
-          list-style: none;
-        }
-        a{
-          text-decoration: none;
-        }
 
