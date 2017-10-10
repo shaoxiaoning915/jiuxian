@@ -43,7 +43,7 @@
           </div>  
             <!-- 商品信息     -->
           <ul class="catShopList">
-            <li class="bor" v-for=" (item,index) in winelist">
+            <li class="bor" v-for="(item,index) in winelist" :key="item.id">
               <div class="catShopCont">
                 <a href="javascript:void(0)" class="cartDel" @click="del(item)">|&nbsp;删除</a>
                 <label status="checkStatus" sku-id="item-46440"><input type="checkbox" name="catCheck" data-type="checkbox"><i class="pubIcon falseIcon" data-type="checkbox"></i></label>
@@ -69,9 +69,9 @@
                   </p>
                   <div class="rsCartItem">
                     <div class="comAmount">
-                      <a class="publicIcon minus">-</a>
-                      <input class="inpVal" type="text" value="1" skuid="item-46440">
-                      <a class="publicIcon plus">+</a>
+                      <a class="publicIcon minus" @click="down(item.pid)">-</a>
+                      <input class="inpVal" type="text" v-model="item.count" skuid="item-46440">
+                      <a class="publicIcon plus" @click="up(item.pid)">+</a>
                     </div>
                   </div>
                   <p></p>
@@ -94,7 +94,7 @@
             <p class="colorTxt"><span>优惠：</span><strong>￥0.00</strong></p>
           </div>
           <span>
-            <a href="javascript:void(0)" class="delBtn">去结算&nbsp;(3)</a>
+            <a href="javascript:void(0)" class="delBtn">去结算&nbsp;({{ totalCount }})</a>
           </span>
         </div>
         <!-- 购物车 -->  
@@ -117,16 +117,32 @@ export default {
       if(confirm('真的要删除商品吗~？？？')){
           this.$store.dispatch('del',item);  
       }  
+    },
+    //增加商品数量
+    up(id){
+      this.$store.dispatch('up', id)
+    },
+    //减少商品数量
+    down(id){
+      console.log(id);
+      this.$store.dispatch('down', id)
     }
   },
   computed:{
+    //获取商品的总价钱
       totalMoney(){
-          return this.$store.state.money;
+          return this.$store.getters.totalMoney;
       },
+      // 获取添加购物车的商品列表
       winelist(){
-        //   console.log(this.$store.state.goodsList);
+          // console.log(this.$store.state.goodsList);
           return this.$store.state.goodsList;
+      },
+      // 获取商品的总件数
+      totalCount(){
+          return this.$store.getters.totalCount;
       }
+
   }  
 }
 </script>

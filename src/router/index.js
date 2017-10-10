@@ -72,7 +72,8 @@ const routes =[
         { path:'/xinpin', component: Xinpin },
         { path:'/jinxuan', component: Jinxuan },
         // 分类
-        { path:'/WineDetail/:wineId', component: WineDetail},
+        // { path:'/WineDetail/:wineId', component: WineDetail},
+        { path:'/WineDetail', component: WineDetail},
         //详情
         { path:'/details', component: Details },
         { path:'/comments', component: Comments,children:[

@@ -2,18 +2,38 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 let state = { 
-    money:0, //总价钱
     totalCount:0, //商品个数
     activeItem:{}, //商品个数
     goodsList:[],//商品列表
-    isLogin:false
+    isLogin:false,
+    activewine:{}//当前商品对象
 }
 let mutations = {
     ADD(state,obj){
-        state.money += obj.danjia;
-        state.goodsList.push(obj.duixiang);
-        state.activeItem = obj.duixiang;
-        state.totalCount += parseInt(obj.shuliang);
+        // state.money += obj.danjia;
+        // state.goodsList.push(obj.duixiang);
+        // state.activeItem = obj.duixiang;
+        // state.totalCount += parseInt(obj.shuliang);
+        //用来判断所添加的商品是否存在的标识
+        let isExist = false
+        for(let tempItem of state.goodsList){
+            if(tempItem.pid == obj.pid){
+                isExist = true
+                tempItem.count += Number(obj.count)
+                break;
+            }
+        }
+        //如果不存在，则是新添加的商品
+        if(!isExist){
+            let cartwine = {
+                pid:obj.pid,
+                imgPath:obj.imgPath,
+                jxPrice:obj.jxPrice,
+                pname:obj.pname,
+                count:obj.count
+            }
+            state.goodsList.push(cartwine)
+        }
     },
     REDUCE(state,price){
         state.money -= price
@@ -23,27 +43,74 @@ let mutations = {
     DEL(state,item){
         let idx = state.goodsList.indexOf(item);
         state.goodsList.splice(idx,1);
+    },
+    ADD_ACTIVE(state,item){
+        state.activewine = item;
+    },
+    // 增加商品数量
+    UP(state, id){
+        for(let item of state.goodsList){
+            if(item.pid == id){
+                item.count++
+                break;
+            }
+        }
+    },
+    //减少商品数量
+    DOWN(state, id){
+       for(let item of state.goodsList){
+           if(item.pid == id){
+               if(item.count > 1){
+                   item.count--
+               }
+           }
+           break;
+       } 
     }
 }
 let getters = {
-
+    //获取商品的总数量
+    totalCount(state){
+        let totalSum = 0;
+        for(let item of state.goodsList){
+            totalSum += Number(item.count)
+        }
+        return totalSum
+    },
+    totalMoney(state){
+        let totalPrice = 0;
+        for(let item of state.goodsList){
+            totalPrice += Number(item.count * item.jxPrice)
+        }
+        return totalPrice
+    }
 }
 let actions = {
+    //添加到购物车
     add(context,obj){
-        setTimeout(()=>{
-            context.commit('ADD',obj)
-        },1000)
+        context.commit('ADD',obj)
     },
     del(context,item){
-        setTimeout(() =>{
-            context.commit('DEL',item)
-        },1000)
+        context.commit('DEL',item)
+    },
+    //当前商品对象
+    add_active(context,item){
+        context.commit('ADD_ACTIVE',item)
+    },
+    //增加商品数量
+    up({ commit }, id){
+        commit('UP', id)
+    },
+    //减少商品数量
+    down({ commit }, id){
+        commit('DOWN', id)
     }
 }
 // 实例化vue仓库
 const store = new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 })
 export default store

@@ -40,7 +40,7 @@
               <div class="bd">
                 <ul>
                   <li>
-                    <a href="#"><img :src=" detail.imgPath "></a>
+                    <a href="javascript:void(0)"><img :src=" winedetail.imgPath "></a>
                   </li>
                 </ul>
               </div>
@@ -51,7 +51,7 @@
           <div class="detailsbd">
             <div class="detailsTil">
 			    <h4>
-                  <img src="https://m.jiuxian.com/mjava_statics/images/goods/jxzy.png" class="jxzy" style="display: true">{{ detail.pname }}
+                  <img src="https://m.jiuxian.com/mjava_statics/images/goods/jxzy.png" class="jxzy" style="display: true">{{ winedetail.pname }}
                 </h4>
 			</div>
             <!-- <div class="detailsTip">海外直采，高性价比澳洲套装,送酒刀醒酒器</div> -->
@@ -60,7 +60,7 @@
                 <p id="no_clubPrice">
                   <span class="price">
                     <em>￥</em>
-                    <b>{{ detail.jxPrice }}</b>
+                    <b>{{ winedetail.jxPrice }}</b>
                   </span>
                 </p>
               </div>
@@ -262,7 +262,7 @@
            </div>
            <div class="detailBomRight" id="footerBar">
                <li class="inCart">
-                   <a class="detailLink toCart"  id="toCart_goods" @click="add()">加入购物车</a>
+                   <a class="detailLink toCart"  id="toCart_goods" @click="add(winedetail)">加入购物车</a>
                </li>
                <ul class="canBuy">
                    <li>
@@ -290,23 +290,24 @@ export default {
         backFn(){
         this.$router.go(-1);
         },
-        add(){
+        add(item){
             // this.$store.commit('ADD',this.detail.jxPrice);
             // this.$store.dispatch('add',this.detail.jxPrice*this.count,this.detail,this.count);
             // console.log(this.detail);
             // console.log(this.count);
-            this.$store.dispatch('add',{
-                danjia: this.detail.jxPrice*this.count,
-                duixiang: this.detail,
-                shuliang: this.count
-            })
+            // this.$store.dispatch('add',{
+            //     danjia: this.detail.jxPrice*this.count,
+            //     duixiang: this.detail,
+            //     shuliang: this.count
+            // })
+            this.winedetail.count = this.count
+            this.$store.dispatch('add',item)
         }
     },
     created(){
-       console.log(this.$route.path);
+        //console.log(this.$route.path);
         this.$http.get(this.url).then(res =>{
         this.list = res.body.promoList;
-            // console.log(this.list);
         },err =>{
             console.log(err);
         })
@@ -322,8 +323,14 @@ export default {
             }
            return{ jxPrice:''}
         },
+        //获取当前商品的对象
+        winedetail(){
+            // console.log(this.$store.state.activewine)
+            return this.$store.state.activewine;
+        },
+        // 获取商品的总件数
         totalCount(){
-            return this.$store.state.totalCount;
+            return this.$store.getters.totalCount;
         }
     }
 }

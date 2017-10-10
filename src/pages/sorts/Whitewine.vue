@@ -24,8 +24,9 @@
     </div>
     <div class="content">
      <ul :class="changeclass">
-          <li v-for="(item,index) in winelist" :key="item.id">
-          <router-link :to="'/WineDetail/' + item.commonProductInfo.pid" class="goodlist">
+          <li v-for="(item,index) in winelist" :key="item.id" @click="add_active(item.commonProductInfo)">
+          <!-- <router-link :to="'/WineDetail/' + item.commonProductInfo.pid" class="goodlist"> -->
+           <router-link to="/WineDetail" class="goodlist">
             <img class="prodImg" :src="item.commonProductInfo.imgPath">
             <div class="prodInfo">
               <div class="prodName">
@@ -69,7 +70,9 @@ export default {
     backFn(){
       this.$router.go(-1);
     },
-    
+    add_active(item){
+      this.$store.dispatch('add_active',item)
+    }
   },
   created(){
       this.$http.get(this.url).then(res =>{
