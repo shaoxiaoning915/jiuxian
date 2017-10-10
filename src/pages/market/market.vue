@@ -7,28 +7,28 @@
           <h2 class="headTitle">购物车</h2>
           <a href="javascript:void(0)" class="navbar" @click="showbar()"></a>
           </div>
-          <ul class="nav">
+          <!-- <ul class="nav">
           <li class="home"><i></i><span>首页</span></li>
           <li class="home"><i></i><span>首页</span></li>
           <li class="home"><i></i><span>首页</span></li>
           <li class="home"><i></i><span>首页</span></li>
-          </ul>
+          </ul> -->
+            <!-- 顶部菜单 -->
+            <div class="topCatTipBd">
+            <i class="pubIcon"></i><p>自营商品实付满88元免运费，偏远地区满500免运费</p>
+            </div> 
       </div>
-      <!-- 顶部菜单 -->
-      <div class="topCatTipBd">
-          <i class="pubIcon"></i><p>自营商品实付满88元免运费，偏远地区满500免运费</p>
-      </div> 
       <!-- 空购物车 -->
-      <!-- <div class="cart_container">
+      <div class="cart_container" v-show="winelist.length == 0">
         <div class="catKongBox">
           <i class="car"></i>
           <p class="kong">购物车还是空的</p>
           <p class="go">快去逛逛吧~</p>
           <a href="javascript:void(0)">促销活动</a>
         </div>
-      </div> -->
+      </div>
       <!-- 购物车 -->
-      <div class="cart_container">
+      <div class="cart_container"  v-show="winelist.length >= 1">
         <div class="cartWrap">
           <!-- 商店名字 -->
           <div class="pucTitle">
@@ -38,38 +38,39 @@
               </label>
               <span class="jxzy"><img src="https://mcart.jiuxian.com/statics/images/jx.png"></span>
               <span class="title">
-                <a href="https://m.jiuxian.com/mobile/POP/KFJTM/index.html">品正源清酒类精品店&gt;</a>
+                <a href="https://m.jiuxian.com/mobile/POP/KFJTM/index.html">酒仙自营</a>
               </span>
           </div>  
             <!-- 商品信息     -->
           <ul class="catShopList">
-            <li class="bor">
+            <li class="bor" v-for=" (item,index) in winelist">
               <div class="catShopCont">
-                <a href="javascript:void(0)" class="cartDel" cart_unit="item-46440">|&nbsp;删除</a>
+                <a href="javascript:void(0)" class="cartDel" @click="del(item)">|&nbsp;删除</a>
                 <label status="checkStatus" sku-id="item-46440"><input type="checkbox" name="catCheck" data-type="checkbox"><i class="pubIcon falseIcon" data-type="checkbox"></i></label>
               <div class="catShopInfo clearfixed">
               <div class="catImg catImgThr">
                 <a href="https://m.jiuxian.com//m_v1/goods/view/46440">
-                  <img src="https://img10.jiuxian.com/2017/0802/fdafbaf837df4337af0e90da5888c6d04.jpg" alt="">
+                  <img :src="item.imgPath">
                 </a>
               </div>
               <div class="catInfo">
                 <div class="price">
                   <a href="https://m.jiuxian.com//m_v1/goods/view/46440">
                     <h4 class="twoLineEllipsisCart">
-                    52°汾牌老酒原浆礼宾酒225ml*6
+                    <!-- 52°汾牌老酒原浆礼宾酒225ml*6 -->
+                    {{ item.pname }}
                     </h4>
                   </a>
                   <p>
                     <span>
-                    ¥138.00
+                   ￥{{ item.jxPrice }}
                     </span>
                     <span><strong style="background-color:#ff6266">掌上秒拍</strong></span>
                   </p>
                   <div class="rsCartItem">
                     <div class="comAmount">
                       <a class="publicIcon minus">-</a>
-                      <input class="inpVal" type="text" value="2" skuid="item-46440">
+                      <input class="inpVal" type="text" value="1" skuid="item-46440">
                       <a class="publicIcon plus">+</a>
                     </div>
                   </div>
@@ -89,7 +90,7 @@
           </label>
           <!-- 合计 -->
           <div>
-            <p><span>合计：</span><em>￥297.90</em></p>
+            <p><span>合计：</span><em>￥{{ totalMoney }}</em></p>
             <p class="colorTxt"><span>优惠：</span><strong>￥0.00</strong></p>
           </div>
           <span>
@@ -111,13 +112,26 @@ export default {
   methods:{
     backFn(){
       this.$router.go(-1);
+    },
+    del(item){
+      if(confirm('真的要删除商品吗~？？？')){
+          this.$store.dispatch('del',item);  
+      }  
     }
+  },
+  computed:{
+      totalMoney(){
+          return this.$store.state.money;
+      },
+      winelist(){
+        //   console.log(this.$store.state.goodsList);
+          return this.$store.state.goodsList;
+      }
   }  
 }
 </script>
     
 <style lang="css" scoped>
-
     .pucTitle i{
       width:25px;
       height: 25px;
@@ -165,8 +179,9 @@ export default {
     }
     .catKongBox{
       width:100%;
-      height:160px;
+      height:500px;
       margin-top:100px;
+      margin-left:40%;
     }
     .topCatTipBd{
       width:100%;
@@ -194,7 +209,8 @@ export default {
       /* height:100px; */
       height: 100%;
       background:#F3F5F6;
-      margin-top:40px;
+      padding-top:62px;
+      padding-bottom:50px;
     }
     /* 顶部菜单 */
     #head{
@@ -202,6 +218,8 @@ export default {
       position: fixed;
       left: 0;
       top:0;
+      height:100px;
+      z-index:1000;
     }
     .head{
       width:100%;
@@ -209,7 +227,6 @@ export default {
       background-color:#fafafa;
       position:relative;
       clear:both;
-      z-index:1000;
     }
     .prev{
       width:.3rem;
@@ -305,7 +322,7 @@ export default {
     background-size: 150px 150px;
 }
 .pucTitle .falseIcon {
-    background-position: -27px -115px;
+    background-position: -2px -115px;
 }
 .catShopList li label i {
     width: 25px;
@@ -316,7 +333,7 @@ export default {
     display: block;
 }
 .catShopList li label .falseIcon {
-    background-position: -25px -115px;
+    background-position: -2px -115px;
 }
 .catShopList li label i {
     width: 25px;
@@ -474,7 +491,7 @@ export default {
     display: block;
 }
 .catBomAllCheak label .falseIcon {
-    background-position: -25px -115px;
+    background-position: -2px -115px;
 }
 .catBomAllCheak span {
     float: right;

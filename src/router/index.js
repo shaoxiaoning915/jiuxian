@@ -32,6 +32,8 @@ import Jinxuan from '../pages/home/type/jinxuan'
 //导入商品列表组件
 // 白酒组件
 import Whitewine from '../pages/sorts/Whitewine'
+import Redwine from '../pages/sorts/Redwine'
+import Yangwine from '../pages/sorts/Yangwine'
 //导入详情列表组件
 import WineDetail from '../pages/WineDetail'
 import Details from '../pages/sesscions/Details'

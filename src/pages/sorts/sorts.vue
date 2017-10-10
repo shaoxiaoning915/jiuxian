@@ -24,6 +24,15 @@
         <li v-for="(item,index) in list1" :key="item.id">
           <router-link :to="'/sorts/Whitewine/'+ index"><i></i><p> {{ item }}</p></router-link>
         </li>
+				<!-- <li>
+          <router-link to="/sorts/Whitewine"><i></i><p> 白酒 </p></router-link>
+        </li>
+				<li>
+          <router-link to="/sorts/Redwine"><i></i><p> 葡萄酒 </p></router-link>
+        </li>
+				<li>
+          <router-link to="/sorts/Yangwine"><i></i><p> 洋酒 </p></router-link>
+        </li> -->
         <li v-for="(item,index) in list2" :key="item.id">
           <a href="javascript:void(0)"><i></i><p>{{ item }}</p></a>
         </li>

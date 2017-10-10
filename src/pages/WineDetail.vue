@@ -40,7 +40,7 @@
               <div class="bd">
                 <ul>
                   <li>
-                    <a href="#"><img src="http://img08.jiuxian.com/2017/0602/16c02e056ea04184aedbde93a13e915c5.jpg"></a>
+                    <a href="#"><img :src=" detail.imgPath "></a>
                   </li>
                 </ul>
               </div>
@@ -50,17 +50,17 @@
           <!-- 商品名称价格等 begin -->
           <div class="detailsbd">
             <div class="detailsTil">
-								<h4>
-                  <img src="https://m.jiuxian.com/mjava_statics/images/goods/jxzy.png" class="jxzy" style="display: true">【红洋酒特卖】澳大利亚红酒整箱澳丽庄园经典红葡萄酒750ml（6瓶套）醒酒器酒刀
+			    <h4>
+                  <img src="https://m.jiuxian.com/mjava_statics/images/goods/jxzy.png" class="jxzy" style="display: true">{{ detail.pname }}
                 </h4>
-							</div>
-            <div class="detailsTip">海外直采，高性价比澳洲套装,送酒刀醒酒器</div>
+			</div>
+            <!-- <div class="detailsTip">海外直采，高性价比澳洲套装,送酒刀醒酒器</div> -->
             <div class="priceAndTag">
               <div class="detailsPrice clearBoth">
                 <p id="no_clubPrice">
                   <span class="price">
                     <em>￥</em>
-                    <b>{{ detail.wine_price}}</b>
+                    <b>{{ detail.jxPrice }}</b>
                   </span>
                 </p>
               </div>
@@ -96,9 +96,9 @@
                 <div class="dd">
                   <div class="rsCartItem">
                     <div class="comAmount">
-                        <a id="decrease_number_goods" class="publicIcon minus on" href="javascript:;" onclick="chgNum(-1)">-</a> 
-                        <input type="text" value="1" id="prosum" onblur="chgNum()" onafterpaste="chgNum()"> 
-                        <a class="publicIcon plus " href="javascript:;" onclick="chgNum(1)" id="increase_number_goods">+</a>
+                        <a id="decrease_number_goods" class="publicIcon minus on" href="javascript:;"  @click="count = parseInt(count) > 1 ?  parseInt(count) - 1 : 1">-</a> 
+                        <input type="text" v-model="count" id="prosum"> 
+                        <a class="publicIcon plus " href="javascript:;" id="increase_number_goods" @click="count = parseInt(count) + 1">+</a>
                     </div>
                   </div>
                 </div>
@@ -238,6 +238,40 @@
               </div>
           </div>
        </div> 
+          <!-- 固定脚部 -->
+       <div class="bottomFix">
+           <div class="detailBomNav">
+               <ul>
+                   <li>
+                        <a href="javascript:;" id="zaixiankefu"> 
+                            <i class=" shijiushiIcon "></i>
+                        </a>
+                    </li>
+                   <li>
+                        <a href="javascript:;" class="" id="collect_goods"> 
+                            <i class=" collectIcon " ></i>
+                        </a>
+					</li>
+                   <li>
+                       <em id="cartNums"> {{ totalCount }}</em> 
+				        <router-link to="/market" id="detail_gouwuche">
+                            <i class="cartIcon2"></i>
+                        </router-link>
+                    </li>
+               </ul>
+           </div>
+           <div class="detailBomRight" id="footerBar">
+               <li class="inCart">
+                   <a class="detailLink toCart"  id="toCart_goods" @click="add()">加入购物车</a>
+               </li>
+               <ul class="canBuy">
+                   <li>
+                       <a class="detailLink detSty buyNow"  href="javascript:;" id="buyNow_goods">立即购买</a>
+                    </li>
+               </ul>
+           </div>
+       </div>
+       <!-- 固定脚部end -->
    </div>
 </template>
     
@@ -247,20 +281,32 @@ export default {
     data () {
         return {
             // msg: 'sxn'
-            url:'../static/winesortlist2.json',
-           winedetail:[],
+            url:'../../static/baijiu.json',
+           list:[],
+           count:1
         };
     },
     methods:{
         backFn(){
         this.$router.go(-1);
+        },
+        add(){
+            // this.$store.commit('ADD',this.detail.jxPrice);
+            // this.$store.dispatch('add',this.detail.jxPrice*this.count,this.detail,this.count);
+            // console.log(this.detail);
+            // console.log(this.count);
+            this.$store.dispatch('add',{
+                danjia: this.detail.jxPrice*this.count,
+                duixiang: this.detail,
+                shuliang: this.count
+            })
         }
     },
     created(){
+       console.log(this.$route.path);
         this.$http.get(this.url).then(res =>{
-            this.winedetail = res.body.winelist2;
-            // console.log(res.body.winelist2);
-            console.log(this.winedetail);
+        this.list = res.body.promoList;
+            // console.log(this.list);
         },err =>{
             console.log(err);
         })
@@ -268,16 +314,17 @@ export default {
     computed:{
        detail(){
         //    获取声明式传值参数
-           console.log(this.$route.params.wineId);
-           console.log(this.winedetail);
-           for(var item of this.winedetail){
-               if(this.$route.params.wineId == item.wineId){
-                  return item;
-                //   console.log(item); 
+        //    console.log(this.$route.params.wineId);
+           for(var item of this.list){
+               if(this.$route.params.wineId == item.commonProductInfo.pid){
+                  return item.commonProductInfo;
                }
-           }
-           return {wine_price:''}
-       }
+            }
+           return{ jxPrice:''}
+        },
+        totalCount(){
+            return this.$store.state.totalCount;
+        }
     }
 }
 
@@ -484,7 +531,7 @@ export default {
     .slideBox .bd li{
       position: relative;
       text-align: center;
-      float: left;
+      /* float: left; */
     }
     .slideBox .bd li a {
         -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -644,157 +691,157 @@ export default {
         outline: none;
         font-family: Microsoft YaHei;
     }
-  /* 地址 */
-  .dOrder-city{
-    padding: 10px 0 0;
-    color: #252525;
-    height: 0.24rem;
-    z-index: 3;
-  }
-  .set-tit{
-    float: left;
-    line-height: 0.24rem;
-    color: #666;
-  }
-  .dOrder-city .dOrder-city-sel{
-    color: #252525;
-    float: left;
-    height: 0.22rem;
-    line-height: 0.22rem;
-    margin-left: 20px;
-    padding-left: 5px;
-    position: relative;
-    z-index: 1;
-    display: block;
-    width: 80%;
-  }
-  .dOrder-city .dOrder-city-sel b{
-    color: #252525;
-    font-weight: normal;
-    padding-right: 7px;
-    vertical-align: middle; 
-    float: left;
-  }
-  .addTip{
-    color: #fc5a5a;
-    margin-left: 50px;
-    font-size: 12px;
-    padding-bottom: 10px;
-    text-align: left;
-  }
-  /* 提示信息 */
-  .detailsDl .dd p {
-      line-height: 20px;
-      margin-bottom: 5px;
-  }
-  /* 保障 */
-  .detailsSecurityBox {
-      padding: 10px 12px;
-      border-bottom: 1px solid #e2e2e2;
-      /* margin-bottom: 8px; */
-      background: #f9f9f9;
-  }
-  .detailsSecurity {
-      height: 20px;
-      line-height: 20px;
-      overflow: hidden;
-      position: relative;
-  }
-  .detailsSecurity span {
-      float: left;
-      color: #666;
-      font-size: 12px;
-      display: block;
-      height: 20px;
-      margin-right: 15px;
-  }
-  .detailsSecurity i {
-      width: 13px;
-      height: 13px;
-      display: block;
-      float: left;
-      margin: 3px 3px 0 0;
-      font-style: italic;
-  }
-  /* 商品评价 */
-  /* 商品标题导栏 */
-  .detailCommentTil{
-    border-bottom: 1px solid #f0f0f0;
-    border-width: 0 0 1px;
-    height: 0.44rem;
-    line-height: 0.44rem;
-    position: relative;
-    padding: 0 10px;
-    color: #252525;
-    font-size: 14px;
-  }
-  .detailCommentTil div {
-    display: block;
-    float: right;
-    color: #666;
-    font-size: 12px;
-    position: relative;
-  }
-  .detailCommentTil .goodsComtTil1{
-    float: left;
-  }
-  .pubIcon {
-    background: url(https://m.jiuxian.com/mjava_statics/images/goods/catIcon.png) no-repeat 0 0;
-    background-size: 150px;
-  } 
-  .detailCommentTil div i {
-      background-position: -130px -40px;
-      width: 10px;
-      height: 13px;
-      overflow: hidden;
-      display: block;
-      position: absolute;
-      top: 16px;
-      right: 5px;
-  }
-  .detailCommentTil div strong {
-    color: #fc5a5a;
-    padding-left: 2px;
-    font-weight: normal;
-    padding-right: 14px;
-  }
-  .detailCommentTil em {
-    color: #999;
-    font-size: 12px;
-    padding-left: 5px;
-    font-style: normal;
-  }
-  /* 商品评价内容 */
-  .detailCommentUl {
+    /* 地址 */
+    .dOrder-city{
+        padding: 10px 0 0;
+        color: #252525;
+        height: 0.24rem;
+        z-index: 3;
+    }
+    .set-tit{
+        float: left;
+        line-height: 0.24rem;
+        color: #666;
+    }
+    .dOrder-city .dOrder-city-sel{
+        color: #252525;
+        float: left;
+        height: 0.22rem;
+        line-height: 0.22rem;
+        margin-left: 20px;
+        padding-left: 5px;
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 80%;
+    }
+    .dOrder-city .dOrder-city-sel b{
+        color: #252525;
+        font-weight: normal;
+        padding-right: 7px;
+        vertical-align: middle; 
+        float: left;
+    }
+    .addTip{
+        color: #fc5a5a;
+        margin-left: 50px;
+        font-size: 12px;
+        padding-bottom: 10px;
+        text-align: left;
+    }
+    /* 提示信息 */
+    .detailsDl .dd p {
+        line-height: 20px;
+        margin-bottom: 5px;
+    }
+    /* 保障 */
+    .detailsSecurityBox {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e2e2e2;
+        /* margin-bottom: 8px; */
+        background: #f9f9f9;
+    }
+    .detailsSecurity {
+        height: 20px;
+        line-height: 20px;
+        overflow: hidden;
+        position: relative;
+    }
+    .detailsSecurity span {
+        float: left;
+        color: #666;
+        font-size: 12px;
+        display: block;
+        height: 20px;
+        margin-right: 15px;
+    }
+    .detailsSecurity i {
+        width: 13px;
+        height: 13px;
+        display: block;
+        float: left;
+        margin: 3px 3px 0 0;
+        font-style: italic;
+    }
+    /* 商品评价 */
+    /* 商品标题导栏 */
+    .detailCommentTil{
+        border-bottom: 1px solid #f0f0f0;
+        border-width: 0 0 1px;
+        height: 0.44rem;
+        line-height: 0.44rem;
+        position: relative;
+        padding: 0 10px;
+        color: #252525;
+        font-size: 14px;
+    }
+    .detailCommentTil div {
+        display: block;
+        float: right;
+        color: #666;
+        font-size: 12px;
+        position: relative;
+    }
+    .detailCommentTil .goodsComtTil1{
+        float: left;
+    }
+    .pubIcon {
+        background: url(https://m.jiuxian.com/mjava_statics/images/goods/catIcon.png) no-repeat 0 0;
+        background-size: 150px;
+    } 
+    .detailCommentTil div i {
+        background-position: -130px -40px;
+        width: 10px;
+        height: 13px;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        top: 16px;
+        right: 5px;
+    }
+    .detailCommentTil div strong {
+        color: #fc5a5a;
+        padding-left: 2px;
+        font-weight: normal;
+        padding-right: 14px;
+    }
+    .detailCommentTil em {
+        color: #999;
+        font-size: 12px;
+        padding-left: 5px;
+        font-style: normal;
+    }
+    /* 商品评价内容 */
+    .detailCommentUl {
       padding: 0 10px;
-  }
-  /* .userTil{
-    float: left;
-    width: 100%;
-  }
-  .userTil1{
-    float: left;
-  } */
-  .comentLi {
+    }
+    /* .userTil{
+        float: left;
+        width: 100%;
+    }
+    .userTil1{
+        float: left;
+    } */
+    .comentLi {
       padding: 10px 0;
       border-bottom: 1px solid #f0f0f0;
       width: 100%;
       border-width: 0 0 1px;
-  }
-  .comentLi .userTil em {
+    }
+     .comentLi .userTil em {
       color: #666;
       font-size: 12px;
       font-weight: normal;
       float: right;
       font-style: normal;
-  }
-  .comentLi .userTil strong {
+    }
+    .comentLi .userTil strong {
       color: #666;
       font-size: 12px;
       font-weight: normal;
       margin-right: 10px;
-  }
-  .comentLi .userTil .member {
+    }
+    .comentLi .userTil .member {
       font-style: normal;
       color: #252525;
       border: 1px solid #ccc;
@@ -807,161 +854,319 @@ export default {
       font-size: 10px;
       height: 15px;
       line-height: 15px;
-  }
-  /* 小星星 */
-  .comentLi .userTil span i {
-      background-position: 0 -70px;
-      width: 9px;
-      height: 9px;
-      display: inline-block;
-      margin-right: 2px;
-  }
-  /* 内容 */
-  .comentLi p {
-      padding: 5px 0;
-      font-size: 12px;
-      color: #252525;
-  }
-  .comentLi .smallUl {
-      width: 100%;
-  }
-  .comentLi ul {
-      width: 100%;
-  }
-  .comentLi li {
-      width: 22%;
-      float: left;
-      margin: 2% 2% 0 0;
-      overflow: hidden;
-  }
-  .comentLi li .imgBox {
-      padding-bottom: 100%;
-      position: relative;
-  }
-  .comentLi li .imgHold {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-  }
-  .comentLi li .imgBox span {
-      box-sizing: border-box;
-      display: block;
-      font-size: 0;
-      height: 100%;
-      overflow: hidden;
-      width: 100%;
-  }
-  .comentLi li .imgBox img {
-      width: 100%;
-      height: auto;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translate(-50%, -50%);
-      transform: translate(-50%, -50%);
-      z-index: 2;
-  }
-  /* 自营 */
- .pinBox{
-     width: 100%;
- }
- .pinBox li {
-    padding: 0 10px;
-    position: relative;
-    height: 44px;
-    overflow: hidden;
-    width: 100%;
-}
-.pinBox li b {
-    background-position: -130px -40px;
-    width: 10px;
-    height: 13px;
-    overflow: hidden;
-    display: block;
-    position: absolute;
-    top: 45%;
-    right: 20px;
-}
-.pinBox .logoimg {
-    width: 84px;
-    height: 38px;
-    display: inline-block;
-    border-radius: 50%;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    position: absolute;
-    top: 6px;
-    left: 0;
-}
-.pinBox .pinInfoBox {
-    margin: 0 10px 0 84px;
-    overflow: hidden;
-}
-.pinBox .pinInfo {
-    line-height: 22px;
-    color: #252525;
-    font-size: 12px;
-    display: inline-block;
-    padding-top: 4px;
-    overflow: hidden;
-    width: 97%;
-}
-.pinBox .pinInfo em, .pinBox .pinInfo strong {
-    color: #999;
-    padding-left: 4px;
-    font-weight: normal;
-}
-.pinBox .jxzy {
-    position: relative;
-    border-radius: 0;
-    width: 38px;
-    height: 13px;
-    left: 5px;
-    top: 3px;
-    margin: 2px 0 0;
-}
-.pinBox .pinInfo .pinInfoTxt {
-    height: 22px;
-    line-height: 22px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-/* 店铺介绍 */
-.showCon{
-    padding: 10px;
-    color: #848484;
-    max-width: 780px;
-    margin: 0 auto;
-}
-.prodDet{
-    margin-bottom: 10px;
-}
-.detialTit {
-    height: 24px;
-    line-height: 24px;
-    background: url(https://m.jiuxian.com/mjava_statics/images/prodInfoBg.jpg) 0 0 repeat-x;
-    padding: 0 10px;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-.detialTit i {
-    float: left;
-    height: 8px;
-    width: 8px;
-    overflow: hidden;
-    background: #b00000;
-    margin: 8px 8px 0 0;
-}
-p{
-    text-align: left;
-}
-.showCon .detailImg img {
-    width: 100%!important;
-    height: auto!important;
-}
+    }
+    /* 小星星 */
+    .comentLi .userTil span i {
+        background-position: 0 -70px;
+        width: 9px;
+        height: 9px;
+        display: inline-block;
+        margin-right: 2px;
+    }
+    /* 内容 */
+    .comentLi p {
+        padding: 5px 0;
+        font-size: 12px;
+        color: #252525;
+    }
+    .comentLi .smallUl {
+        width: 100%;
+    }
+    .comentLi ul {
+        width: 100%;
+    }
+    .comentLi li {
+        width: 22%;
+        float: left;
+        margin: 2% 2% 0 0;
+        overflow: hidden;
+    }
+    .comentLi li .imgBox {
+        padding-bottom: 100%;
+        position: relative;
+    }
+    .comentLi li .imgHold {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+    .comentLi li .imgBox span {
+        box-sizing: border-box;
+        display: block;
+        font-size: 0;
+        height: 100%;
+        overflow: hidden;
+        width: 100%;
+    }
+    .comentLi li .imgBox img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        z-index: 2;
+    }
+    /* 自营 */
+    .pinBox{
+        width: 100%;
+    }
+    .pinBox li {
+        padding: 0 10px;
+        position: relative;
+        height: 44px;
+        overflow: hidden;
+        width: 100%;
+    }
+    .pinBox li b {
+        background-position: -130px -40px;
+        width: 10px;
+        height: 13px;
+        overflow: hidden;
+        display: block;
+        position: absolute;
+        top: 45%;
+        right: 20px;
+    }
+    .pinBox .logoimg {
+        width: 84px;
+        height: 38px;
+        display: inline-block;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        position: absolute;
+        top: 6px;
+        left: 0;
+    }
+    .pinBox .pinInfoBox {
+        margin: 0 10px 0 84px;
+        overflow: hidden;
+    }
+    .pinBox .pinInfo {
+        line-height: 22px;
+        color: #252525;
+        font-size: 12px;
+        display: inline-block;
+        padding-top: 4px;
+        overflow: hidden;
+        width: 97%;
+    }
+    .pinBox .pinInfo em, .pinBox .pinInfo strong {
+        color: #999;
+        padding-left: 4px;
+        font-weight: normal;
+    }
+    .pinBox .jxzy {
+        position: relative;
+        border-radius: 0;
+        width: 38px;
+        height: 13px;
+        left: 5px;
+        top: 3px;
+        margin: 2px 0 0;
+    }
+    .pinBox .pinInfo .pinInfoTxt {
+        height: 22px;
+        line-height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    /* 店铺介绍 */
+    .showCon{
+        padding: 10px;
+        color: #848484;
+        max-width: 780px;
+        margin: 0 auto;
+    }
+    .prodDet{
+        margin-bottom: 10px;
+    }
+    .detialTit {
+        height: 24px;
+        line-height: 24px;
+        background: url(https://m.jiuxian.com/mjava_statics/images/prodInfoBg.jpg) 0 0 repeat-x;
+        padding: 0 10px;
+        font-weight: bold;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .detialTit i {
+        float: left;
+        height: 8px;
+        width: 8px;
+        overflow: hidden;
+        background: #b00000;
+        margin: 8px 8px 0 0;
+    }
+    p{
+        text-align: left;
+    }
+    .showCon .detailImg img {
+        width: 100%!important;
+        height: auto!important;
+    }
+    /* 详情页脚本 */
+    .bottomFix {
+        background-color: #fafafa;
+        position: fixed;
+        height: 45px;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        width: 100%;
+    }
+    .detailBomNav {
+        float: left;
+        width: 50%;
+        height: 45px;
+        position: relative;
+    }
+    .detailBomNav:after {
+        border-top: 1px solid #d7d7d8;
+        content: "";
+        width: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        -webkit-transform: scaleY(0.5);
+        transform: scaleY(0.5);
+        z-index: 10;
+    }
+    .detailBomNav ul{
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+    }
+    .detailBomNav li {
+        height: 41px;
+        padding-top: 3px;
+        position: relative;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0;
+        -moz-flex-basis: 0;
+        flex-basis: 0;
+        overflow: hidden;
+    }
+    .detailBomNav li a {
+        display: block;
+        width: 100%;
+        height: 41px;
+    }
+    .detailBomNav li a i {
+        display: block;
+        width: 41px;
+        height: 41px;
+        margin: 0 auto;
+    }
+    .detailBomNav .shijiushiIcon {
+        background: url(https://m.jiuxian.com/mjava_statics/images/goods/sjs.png) no-repeat;
+        background-size: 41px 41px;
+    }
+    .detailBomNav .collectIcon {
+        background: url(https://m.jiuxian.com/mjava_statics/images/goods/bottom05.png) no-repeat;
+        background-size: 41px 41px;
+    }
+    .detailBomNav .cartIcon2 {
+        background: url(https://m.jiuxian.com/mjava_statics/images/goods/bottom06.png) no-repeat;
+        background-size: 41px 41px;
+    }
+    .detailBomNav li:after {
+        border-right: 1px solid #d7d7d8;
+        content: "";
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        -webkit-transform: scaleX(0.5);
+        transform: scaleX(0.5);
+        width: 1px;
+        z-index: 10;
+    }
+    .detailBomNav li em {
+        position: absolute;
+        top: 3px;
+        left: 50%;
+        height: 14px;
+        line-height: 14px;
+        overflow: hidden;
+        display: block;
+        padding: 0 5px;
+        color: #fff;
+        border-radius: 7px;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        background-color: #fc5a5a;
+        font-size: 8px;
+        font-style: normal;
+    }
+    .detailBomRight {
+        margin-left: 50%;
+        height: 46px;
+        display: -webkit-box!important;
+        display: -moz-box;
+        display: box;
+        display: -webkit-flex!important;
+        display: -moz-flex;
+        display: flex!important;
+        -webkit-flex-wrap: wrap;
+        -moz-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    li{
+        list-style: none;
+    }
+    .detailBomRight li.inCart {
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0;
+        -moz-flex-basis: 0;
+        flex-basis: 0;
+    }
+    .detailBomRight li .detailLink.toCart {
+        background-color: #fc5a5a;
+    }
+    .detailBomRight li .detailLink.detSty {
+        background-color: #3c3f51;
+    }
+    .detailBomRight li .detailLink {
+        display: block;
+        width: 100%;
+        height: 46px;
+        line-height: 46px;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        position: relative;
+    }
+    .detailBomRight ul {
+        height: 46px;
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        -webkit-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0;
+        -moz-flex-basis: 0;
+        flex-basis: 0;
+    }
+    #canBuy li{
+        width: 100%;
+    }
 </style>

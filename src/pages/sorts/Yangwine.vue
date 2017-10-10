@@ -58,7 +58,7 @@ export default {
   data () {
     return {
       flag:false,
-      // url:'../static/baijiu.json',
+      url:'../../static/yangjiu.json',
       winelist:[]
     };
   },
@@ -82,16 +82,8 @@ export default {
   computed:{
     changeclass(){
       return this.flag ? 'aaa' : '' ;
-    },
-    url(){
-      // console.log(this.$route.params.index)
-      switch(this.$route.params.index){
-        case '0' : return '../../static/baijiu.json'
-        case '1' : return '../../static/putaojiu.json'
-        case '2' : return '../../static/yangjiu.json'
-      }
     }
-   } 
+  } 
 }
 </script>   
 <style lang="css" scoped>
