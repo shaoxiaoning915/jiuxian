@@ -45,7 +45,7 @@
           <ul class="catShopList">
             <li class="bor" v-for="(item,index) in winelist" :key="item.id">
               <div class="catShopCont">
-                <a href="javascript:void(0)" class="cartDel" @click="del(item)">|&nbsp;删除</a>
+                <a href="javascript:void(0)" class="cartDel" @click="del(item.pid)">|&nbsp;删除</a>
                 <label status="checkStatus" sku-id="item-46440"><input type="checkbox" name="catCheck" data-type="checkbox"><i class="pubIcon falseIcon" data-type="checkbox"></i></label>
               <div class="catShopInfo clearfixed">
               <div class="catImg catImgThr">
@@ -113,9 +113,9 @@ export default {
     backFn(){
       this.$router.go(-1);
     },
-    del(item){
+    del(id){
       if(confirm('真的要删除商品吗~？？？')){
-          this.$store.dispatch('del',item);  
+          this.$store.dispatch('del',id);  
       }  
     },
     //增加商品数量
@@ -124,7 +124,6 @@ export default {
     },
     //减少商品数量
     down(id){
-      console.log(id);
       this.$store.dispatch('down', id)
     }
   },

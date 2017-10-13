@@ -40,9 +40,15 @@ let mutations = {
     },
     ADDITEM(state,item){
     },
-    DEL(state,item){
-        let idx = state.goodsList.indexOf(item);
-        state.goodsList.splice(idx,1);
+    DEL(state, id){
+        // let idx = state.goodsList.indexOf(item);
+        // state.goodsList.splice(idx,1);
+        for (let index in state.goodsList){
+            if(state.goodsList[index].pid == id){
+                state.goodsList.splice(index, 1)
+                break;
+            }
+        }
     },
     ADD_ACTIVE(state,item){
         state.activewine = item;
@@ -63,8 +69,8 @@ let mutations = {
                if(item.count > 1){
                    item.count--
                }
+               break;
            }
-           break;
        } 
     }
 }
@@ -77,6 +83,7 @@ let getters = {
         }
         return totalSum
     },
+    // 商品总价钱
     totalMoney(state){
         let totalPrice = 0;
         for(let item of state.goodsList){
@@ -90,8 +97,8 @@ let actions = {
     add(context,obj){
         context.commit('ADD',obj)
     },
-    del(context,item){
-        context.commit('DEL',item)
+    del(context,id){
+        context.commit('DEL',id)
     },
     //当前商品对象
     add_active(context,item){

@@ -27,7 +27,7 @@
           <li v-for="(item,index) in winelist" :key="item.id" @click="add_active(item.commonProductInfo)">
           <!-- <router-link :to="'/WineDetail/' + item.commonProductInfo.pid" class="goodlist"> -->
            <router-link to="/WineDetail" class="goodlist">
-            <img class="prodImg" :src="item.commonProductInfo.imgPath">
+            <img class="prodImg" v-lazy="item.commonProductInfo.imgPath">
             <div class="prodInfo">
               <div class="prodName">
                 <p class="name"><a href="javascript:;">{{ item.commonProductInfo.pname }}</a></p>
@@ -100,6 +100,18 @@ export default {
 <style lang="css" scoped>
   .goodlist{
     width:100%;
+  }
+  .prodImg{
+    transition:all 2s;
+  }
+  img[lazy=loading]{
+    opacity:0
+  }
+  img[lazy=error]{
+    /* opacity:1 */
+  }
+  img[lazy=loaded]{
+    opacity:1
   }
   /* tab菜单 */
   .tabBar .tab.tab4 .line{
