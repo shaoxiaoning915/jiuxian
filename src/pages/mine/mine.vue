@@ -4,7 +4,9 @@
        <!-- 头部部分 -->
        <div class="publicHead" id="head">
             <div class="head clearBoth">
-                <router-link to="/home"><a href="javascript:void(0)" class="back" ></a></router-link>
+                <!-- <router-link to="/home"> -->
+                <a href="javascript:void(0)" class="back" @click="go()"></a>
+                <!-- </router-link> -->
                 <h2 class="headTitle">用户登录</h2>
                 <a class="navBar" href="javascript:void(0)" @click="btnFn"></a>
             </div>
@@ -62,6 +64,9 @@ export default {
   methods:{
       btnFn(){
           this.flag = !this.flag; 
+      },
+      go(){
+         this.$router.go(-1);
       }
   }
 }

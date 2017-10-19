@@ -34,7 +34,7 @@
           <div class="pucTitle">
               <label>
                   <input type="checkbox" id="shopCheckAll" name="catCheck" value="-1" data-type="checkbox">
-                  <i id="-1" class="pubIcon falseIcon"></i>
+                  <i class="pubIcon falseIcon" :class="changebg"></i>
               </label>
               <span class="jxzy"><img src="https://mcart.jiuxian.com/statics/images/jx.png"></span>
               <span class="title">
@@ -46,7 +46,7 @@
             <li class="bor" v-for="(item,index) in winelist" :key="item.id">
               <div class="catShopCont">
                 <a href="javascript:void(0)" class="cartDel" @click="del(item.pid)">|&nbsp;删除</a>
-                <label status="checkStatus" sku-id="item-46440"><input type="checkbox" name="catCheck" data-type="checkbox"><i class="pubIcon falseIcon" data-type="checkbox"></i></label>
+                <label status="checkStatus" sku-id="item-46440"><input type="checkbox" name="catCheck" data-type="checkbox"><i class="pubIcon" :class="changebg" data-type="checkbox"></i></label>
               <div class="catShopInfo clearfixed">
               <div class="catImg catImgThr">
                 <a href="https://m.jiuxian.com//m_v1/goods/view/46440">
@@ -75,7 +75,7 @@
                     </div>
                   </div>
                   <p></p>
-                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -85,7 +85,8 @@
         <!-- 底部总计 -->
         <div class="catBomAllCheak">
           <label data-type="checkallcli" class="lab">
-            <i class="pubIcon falseIcon" data-type="checkall"></i>
+            <i class="pubIcon" data-type="checkall" @click="qh()" :class="changebg"></i>
+            <!-- :class{flag:trueIcon?falseIcon} -->
             <span class="all">全选</span>
           </label>
           <!-- 合计 -->
@@ -94,7 +95,7 @@
             <p class="colorTxt"><span>优惠：</span><strong>￥0.00</strong></p>
           </div>
           <span>
-            <a href="javascript:void(0)" class="delBtn">去结算&nbsp;({{ totalCount }})</a>
+             <router-link to="/mine"><a href="javascript:void(0)" class="delBtn">去结算&nbsp;({{ totalCount }})</a></router-link>
           </span>
         </div>
         <!-- 购物车 -->  
@@ -106,7 +107,7 @@ export default {
   name: "market",
   data () {
     return {
-        pageName:"我是购物车"
+        flag:true
     };
   },
   methods:{
@@ -125,9 +126,18 @@ export default {
     //减少商品数量
     down(id){
       this.$store.dispatch('down', id)
+    },
+    // 全选 切换
+    qh(){
+      // this.flag = !this.flag
+       this.flag ? this.flag = false : this.flag = true;
     }
   },
   computed:{
+    // 切换全选样式
+      changebg(){
+         return this.flag ? 'trueIcon' : 'falseIcon';
+      },
     //获取商品的总价钱
       totalMoney(){
           return this.$store.getters.totalMoney;
@@ -337,6 +347,9 @@ export default {
     background-size: 150px 150px;
 }
 .pucTitle .falseIcon {
+    background-position: -27px -115px;
+}
+.pucTitle .trueIcon {
     background-position: -2px -115px;
 }
 .catShopList li label i {
@@ -348,7 +361,10 @@ export default {
     display: block;
 }
 .catShopList li label .falseIcon {
-    background-position: -2px -115px;
+    background-position: -25px -115px;
+}
+.catShopList li label .trueIcon {
+    background-position: 0px -115px;
 }
 .catShopList li label i {
     width: 25px;
@@ -505,8 +521,11 @@ export default {
     left: 10px;
     display: block;
 }
+.catBomAllCheak label .trueIcon {
+    background-position: 0px -115px;
+}
 .catBomAllCheak label .falseIcon {
-    background-position: -2px -115px;
+    background-position:-25px -115px;
 }
 .catBomAllCheak span {
     float: right;

@@ -13,7 +13,30 @@
        <!-- 轮播图 -->
        <div class="lunbo">
            <!-- <div><img src="./imgs/1.jpg" alt=""></div> -->
-           <lunbo></lunbo>
+           <!-- <lunbo></lunbo> -->
+            <div id="swiper" class="swiperbox">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="http://img07.jiuxian.com/bill/2017/0930/a4227a3cd67a4c4ea84f8e6af63e24bf.jpg">
+                    </div>      
+                    <div class="swiper-slide">
+                        <img src="http://img08.jiuxian.com/bill/2017/0930/67fab8e37e164f8e82474c959930b04d.jpg">
+                    </div>      
+                    <div class="swiper-slide">
+                        <img src="http://img07.jiuxian.com/bill/2017/0930/e9da738e14ea4436890b34ec5fe78932.jpg">
+                    </div>      
+                    <div class="swiper-slide">
+                        <img src="http://img08.jiuxian.com/bill/2017/0930/ce9e4deac06a4a70b3bb8e05ca5fb11c.jpg">
+                    </div>      
+                    <div class="swiper-slide">
+                        <img src="http://img09.jiuxian.com/bill/2017/0930/1b4cb612ed6e4c398bad04348b952dde.jpg">
+                    </div>      
+                    <div class="swiper-slide">
+                        <img src="http://img10.jiuxian.com/bill/2017/0930/4efea781bd1745e48d8c60b5a7721bb7.jpg">
+                    </div>      
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
        </div>
        <!-- 酒类 -->
         <div class="type">
@@ -215,6 +238,7 @@
   
 <script>
 //轮播
+import Vue from 'vue'
 import Lunbo from './lunbo.vue'
 export default {
   name: "home",
@@ -224,9 +248,19 @@ export default {
         url2:"./static/miaopai.json",
         list:[],
         list2:[]
- 
     };
   },
+//   mounted(){
+//      Vue.nextTick(function(){
+//         var myswiper = new Swiper ('.swiperbox', {
+//                 pagination:'.swiper-pagination',
+//                 loop: true,
+//                 speed: 1000,
+//                 autoplay: 2000,
+//                 observer: true
+//         })  
+//       })
+//     },
   components:{
       Lunbo
   },
@@ -239,6 +273,18 @@ export default {
 </script>
     
 <style lang="css" scoped>
+/* 重置轮图样式 */
+.swiper-container-horizontal>.swiper-pagination-bullets{
+    bottom:0px;
+    top:160px;
+}
+.swiper-pagination-bullet{
+    background-color:#fff;
+    opacity:0.4;
+}
+.swiper-pagination-bullet .swiper-pagination-bullet-active{
+    background-color:#fff;
+}
 /* 滚动条高度 */
 ::-webkit-scrollbar{
     height: 1px;

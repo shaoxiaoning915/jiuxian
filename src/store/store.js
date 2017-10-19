@@ -10,10 +10,6 @@ let state = {
 }
 let mutations = {
     ADD(state,obj){
-        // state.money += obj.danjia;
-        // state.goodsList.push(obj.duixiang);
-        // state.activeItem = obj.duixiang;
-        // state.totalCount += parseInt(obj.shuliang);
         //用来判断所添加的商品是否存在的标识
         let isExist = false
         for(let tempItem of state.goodsList){

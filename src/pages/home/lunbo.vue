@@ -32,16 +32,18 @@ export default {
     };
   },
     mounted(){
-      Vue.nextTick(function(){
+    //   Vue.nextTick(function(){
+        window.onload = function(){
             var myswiper = new Swiper ('.swiper-container', {
-            pagination : '.swiper-pagination',
-            loop: true,
-            speed: 1000,
-            autoplay: 2000,
-            observer: true
-            })
+                pagination : '.swiper-pagination',
+                loop: true,
+                speed: 1000,
+                autoplay: 2000,
+                observer: true
+            })  
+        }
             // console.log(myswiper)
-      })
+    //   })
     }
 }
 

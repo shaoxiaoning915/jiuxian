@@ -47,13 +47,8 @@
       </ul>
     </div>
   </div>
-</template>
-    
+</template>   
 <script>
-//返回详情页面
-//history.back ()
-//$router.back()
-// vue 在子路由中，通过 this.$route.params.参数名来接受传递过来的值 不显示url
 export default {
   name: "component_name",
   data () {
@@ -88,6 +83,7 @@ export default {
     },
     url(){
       // console.log(this.$route.params.index)
+    //  $route.params.参数名来接受传递过来的值 渲染对应的jison数据
       switch(this.$route.params.index){
         case '0' : return '../../static/baijiu.json'
         case '1' : return '../../static/putaojiu.json'
@@ -106,9 +102,6 @@ export default {
   }
   img[lazy=loading]{
     opacity:0
-  }
-  img[lazy=error]{
-    /* opacity:1 */
   }
   img[lazy=loaded]{
     opacity:1
