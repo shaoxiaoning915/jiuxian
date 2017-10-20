@@ -7,10 +7,10 @@ let state = {
     activeItem:{}, //商品个数
     goodsList:[],//商品列表
     isLogin:false,
-    alls:4000,
-    timeh:"01",
-    timem:"00",
-    times:"00"
+    alls:[23,0,0],
+    timeh:'',
+    timem:'',
+    times:''
 }
 let mutations = {
     ADD(state,obj){
@@ -28,12 +28,15 @@ let mutations = {
         let idx = state.goodsList.indexOf(item);
         state.goodsList.splice(idx,1);
     },
-    CHANGETIME() {
-        state.alls -= 1;
-        state.timeh = ('00' + parseInt(state.alls / 3600)).slice(-2);
-        state.timem = ('00' + parseInt((state.alls - 3600 * state.timeh) / 60)).slice(-2);
-        state.times = ('00' + parseInt(state.alls - 3600 * state.timeh - 60 * state.timem)).slice(-2);
-   
+    CHANGETIME(state, time) {
+        // state.alls -= 1;
+        var alltime = state.alls[0]*60*60 + state.alls[1]*60 + state.alls[2] - time[0]*60*60 + time[1]*60 +time[2];
+            setInterval(() => {
+                alltime--;
+                state.timeh = ('00' + parseInt(alltime/ 3600)).slice(-2);
+                state.timem = ('00' + parseInt((alltime - 3600 * state.timeh) / 60)).slice(-2);
+                state.times = ('00' + parseInt(alltime - 3600 * state.timeh - 60 * state.timem)).slice(-2);
+                }, 1000)
       },
 }
 let getters = {

@@ -245,10 +245,15 @@ export default {
     created(){
         this.$http.get(this.url).then(res =>{this.list = res.body.promoList;}),err =>{console.log(err);}
         this.$http.get(this.url2).then(res =>{this.list2 = res.body.killProList ;}),err =>{console.log(err);}
-        
-        setInterval(() => {
-            this.$store.commit('CHANGETIME');
-    }, 1000)
+        var time = new Date().toString().split(":");
+        time[0] = time[0].slice(-2);
+        time[2] = time[2].slice(0,2);
+        for(var i = 0;i<time.length;i++){
+            time[i] = Number(time[i])
+        }
+        // setInterval(() => {
+            this.$store.commit('CHANGETIME',time);
+    // }, 1000)
     }
 };
 
