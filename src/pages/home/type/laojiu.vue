@@ -44,7 +44,7 @@
         </div>  <!-- 顶部 -->
 
         <div class="jishi">
-            还剩<span>00</span>天<span>00</span>时<span>00</span>分<span>00</span>秒结束
+            还剩<span>00</span>天<span class="js1">{{js1}}</span>时<span class="js2">{{js2}}</span>分<span class="js3">{{js3}}</span>秒结束
         </div>
             <div v-for="item in img" :key="item.id">
                 <div class="inner1"><img :src="item" alt=""></div>
@@ -107,6 +107,10 @@ export default {
   data () {
     return {
         flag:false,
+        js1:"01",
+        js2:"00",
+        js3:"00",
+        endtime:560,
         url:"./static/yangjiu.json",
         list:[],
         fromList1:['白兰地','威士忌','伏特加','龙舌兰'],
@@ -162,9 +166,6 @@ export default {
              'https://m.jiuxian.com/mobile/2016/LJTM/imgLJTM/39.jpg'
              ]
         }
-            
-
-           
     };
   },
   created(){
@@ -173,7 +174,14 @@ export default {
           this.list = res.body.promoList;
       }),err =>{
           console.log(err);
-      }
+      };
+       let alls = this.endtime * 60;
+        setInterval(() => {
+            alls--;
+            this.js1 = ('00' + parseInt(alls / 3600)).slice(-2);
+            this.js2 = ('00' + parseInt((alls - 3600 * this.js1) / 60)).slice(-2);
+            this.js3 = ('00' + parseInt(alls - 3600 * this.js1 - 60 * this.js2)).slice(-2);
+    }, 1000)
   },
   methods:{
       change(){
@@ -223,6 +231,7 @@ img{
     float: left;
     background: rgba(1,1,1, 0);
     margin: 0 0 0 25%;
+    text-align: center;
 }
 /* 分类按钮div */
 .top>div:nth-of-type(1)>div:nth-of-type(3){
@@ -306,6 +315,7 @@ img{
     color: #000078;
     font-size: 0.14rem;
     line-height: 0.33rem;
+    text-align: center;
 }
 /* 时间方块 */
 .jishi span{

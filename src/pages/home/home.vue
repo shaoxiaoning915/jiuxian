@@ -39,7 +39,7 @@
            <h3>
               <span>掌上秒拍</span>
               <span>距结束
-                    <span>00</span>:<span>00</span>:<span>00</span>
+                    <span>{{timejs1}}</span>:<span>{{timejs2}}</span>:<span>{{timejs3}}</span>
               </span>
               <span>更多商品等你来抢！</span>
               <div><img src="./imgs/jx-sprite.png" alt=""></div>
@@ -54,8 +54,8 @@
                     <!-- 价格 -->
                     <div>
                         <span class="span_1">{{ item2.proName }}</span><br>
-                        <span class="span_2">{{ item2.proPrice }}</span><br>
-                        <span class="span_3">{{ item2.jxPrice }}</span>
+                        <span class="span_2">￥{{ item2.proPrice }}</span><br>
+                        <span class="span_3">￥{{ item2.jxPrice }}</span>
                     </div>
                 </div>
             </div>
@@ -214,6 +214,7 @@
 </template>
   
 <script>
+
 //轮播
 import Lunbo from './lunbo.vue'
 export default {
@@ -223,19 +224,48 @@ export default {
         url:"./static/baokuan.json",
         url2:"./static/miaopai.json",
         list:[],
-        list2:[]
- 
+        list2:[],
+
     };
   },
   components:{
       Lunbo
   },
+   computed: {
+        timejs1() {   
+            return this.$store.getters.js1;
+        },
+        timejs2() {   
+            return this.$store.getters.js2;
+        },
+        timejs3() {   
+            return this.$store.getters.js3;
+        }
+    },
     created(){
         this.$http.get(this.url).then(res =>{this.list = res.body.promoList;}),err =>{console.log(err);}
         this.$http.get(this.url2).then(res =>{this.list2 = res.body.killProList ;}),err =>{console.log(err);}
+        
+        setInterval(() => {
+            this.$store.commit('CHANGETIME');
+    }, 1000)
     }
+};
+
+window.addEventListener('scroll',function(){
+var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+if(scrollTop>135){
+//判断当滚到高度大于135时候 
+//这里写要触发的事件
+    document.getElementsByTagName('nav')[0].style.background = "rgba(231, 75, 72, 1)";
 }
-// console.log(this.list);
+if(scrollTop<135){
+//判断当滚到高度小于135时候
+// console.log('300');
+//这里写要触发的事件
+    document.getElementsByTagName('nav')[0].style.background = "rgba(231, 75, 72, 0)";
+}
+},true);
 </script>
     
 <style lang="css" scoped>
@@ -267,10 +297,11 @@ export default {
 nav{
     width: 100%;
     height: 0.4rem;
-    background: #e74b48;
+    background: rgba(231, 75, 72, 0);
     position: fixed;
     top: 0;
     z-index:10 ;
+    transition: background 2s;
 }
 /*顶部logo  */
 nav>div:nth-child(1){
@@ -322,12 +353,14 @@ nav>div:nth-child(2) img{
 /* 搜索按钮 */
 nav>div:nth-child(3){
     font-size: 0.14rem;
-    width: 0.4rem;
+    width: 0.5rem;
     height: 0.27rem;
     line-height: 0.28rem;
     color: white;
-    margin: 0.06rem 0.15rem 0 0;
+    margin: 0.06rem 0.1rem 0 0;
     float: right;
+    /* background: black; */
+    text-align: center;
 }
 /* 轮播图父div */
 .lunbo{
@@ -377,9 +410,10 @@ nav>div:nth-child(3){
 .miaopai h3{
     width: 100%;
     height: 0.4rem;
-     font-weight: normal;
-     text-align: left;
-     position: relative;
+    line-height: 0.4rem;
+    font-weight: normal;
+    text-align: left;
+    position: relative;
 }
 /* h3字体设置 掌上秒拍 */
 h3>span:nth-child(1){
@@ -414,7 +448,7 @@ h3>span:nth-child(3){
 h3 div{
     position: absolute;
     right: 0.1rem;
-    top: 0.08rem;
+    top: 0.11rem;
     width: 0.2rem;
     height: 0.2rem;
     overflow: hidden;

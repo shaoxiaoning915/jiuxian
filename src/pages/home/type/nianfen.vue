@@ -142,10 +142,7 @@ export default {
              'https://m.jiuxian.com/mobile/2016/LJTM/imgLJTM/38.jpg',
              'https://m.jiuxian.com/mobile/2016/LJTM/imgLJTM/39.jpg'
              ]
-        }
-            
-
-           
+        }  
     };
   },
   created(){
@@ -204,6 +201,7 @@ img{
     float: left;
     background: rgba(1,1,1, 0);
     margin: 0 0 0 25%;
+    text-align: center;
 }
 /* 分类按钮div */
 .top>div:nth-of-type(1)>div:nth-of-type(3){
@@ -287,6 +285,7 @@ img{
     color: #000078;
     font-size: 0.14rem;
     line-height: 0.33rem;
+    text-align: center;
 }
 /* 时间方块 */
 .jishi span{

@@ -137,6 +137,7 @@ img{
     font-size: 0.16rem;
     position: fixed;
     top: 0rem;
+    text-align: center;
 }
 /* 顶部的两个子div大小 */
 .top>div{
@@ -272,7 +273,7 @@ img{
 }
 /* 弹性盒子 */
 .box{
-    margin: 0 0 1rem 0;
+    margin: 0 0 0rem 0;
     display: flex;
     flex-wrap: wrap;
     background: #050430;

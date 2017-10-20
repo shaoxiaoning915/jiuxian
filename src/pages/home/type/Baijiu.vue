@@ -88,7 +88,7 @@
 
 
 
-    <footer></footer> 
+    <!-- <footer></footer>  -->
    </div>
 </template>
     
@@ -159,6 +159,7 @@ export default {
         float: left;
         background: rgba(1,1,1, 0);
         margin: 0 0 0 25%;
+        text-align: center;
     }
     /* 分类按钮div */
     .top>div:nth-of-type(1)>div:nth-of-type(3){
@@ -283,11 +284,12 @@ export default {
         border: 1px solid #e1e1e1;
         font-size: 0.14rem; 
         text-align: center;
-        line-height: 0.34rem;
+        line-height: 0.23rem;
     }
     .bj_type>div:nth-child(2)>div:nth-child(4){
         color: #de4943;
     }
+    /* 精品推荐分割线 */
     .jptj{
         width: 96%;
         height: 0.3rem;
@@ -305,6 +307,7 @@ export default {
     .jptj>div:nth-child(2){
         line-height: 0.3rem;
         width: 1rem;
+        text-align: center;
     }
     /* 商品 */
     .shop{
