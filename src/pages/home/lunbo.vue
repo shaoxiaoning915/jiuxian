@@ -1,5 +1,5 @@
 <template>
-    <div id="swiper">
+    <div id="swiper" class="swiperbox">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="http://img07.jiuxian.com/bill/2017/0930/a4227a3cd67a4c4ea84f8e6af63e24bf.jpg">
@@ -31,28 +31,37 @@ export default {
     return { 
     };
   },
-    mounted(){
-    //   Vue.nextTick(function(){
-        window.onload = function(){
-            var myswiper = new Swiper ('.swiper-container', {
-                pagination : '.swiper-pagination',
+  mounted(){
+     Vue.nextTick(function(){
+        var myswiper = new Swiper ('.swiperbox', {
+                pagination:'.swiper-pagination',
                 loop: true,
                 speed: 1000,
                 autoplay: 2000,
                 observer: true
-            })  
-        }
-            // console.log(myswiper)
-    //   })
-    }
+        })  
+      })
+  },
 }
 
 </script>
     
 <style lang="css" scoped>
  @import url("/static/css/swiper.min.css");
-    .swiper-slide img{
+.swiper-slide img{
         width:100%;
         /* height:.9rem; */
     }
+    /* 重置轮图样式 */
+.swiper-container-horizontal>.swiper-pagination-bullets{
+    bottom:0px;
+    top:160px;
+}
+.swiper-pagination-bullet{
+    background-color:#fff;
+    opacity:0.4;
+}
+.swiper-pagination-bullet .swiper-pagination-bullet-active{
+    background-color:#fff;
+}
 </style>

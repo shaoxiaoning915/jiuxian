@@ -4,7 +4,7 @@
        <div class="publicHead" id="head">
             <div class="head clearBoth">
                 <router-link to="/sesscions"><a href="javascript:void(0)" class="back" ></a></router-link>
-                <h2 class="headTitle">商品详情</h2>
+                <h2 class="headTitle">商品详情333</h2>
                 <a class="navBar" href="javascript:void(0)"></a>
             </div>
             <!-- 头部部分右边点击导航 -->
@@ -107,7 +107,7 @@
             <!-- 地址 start -->
             <div class="dOrder-city" id="_shdz">
               <div class="set-tit">
-                送至eeee
+                送至
               </div>
               <a href="javascript:;" class="dOrder-city-sel"> 
                 <b pid="2">北京</b> 
@@ -282,7 +282,8 @@ export default {
   },
   created(){
     this.$http.get(this.url).then(res =>{
-        // console.log(res.body.productPromo);
+        
+        console.log(res.body.productPromo);
         // this.list1 = res.body.productPromo.advWords;
         this.list = res.body.productPromo
        
@@ -290,7 +291,8 @@ export default {
         console.log(err);
     });
     this.$http.get(this.url1).then(res =>{
-        // console.log(res.body.proEvalList);
+        
+        console.log(res.body.proEvalList);
         // this.list1 = res.body.productPromo.advWords;
         this.list1 = res.body.proEvalList
        
@@ -406,7 +408,7 @@ export default {
         height: auto;
         overflow-x: hidden;
         overflow-y: auto;
-        margin-top: 0.4rem;
+        margin-top: -0.2rem;
     }
     /* app下载 */
     .app-download{

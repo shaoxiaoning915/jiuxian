@@ -34,9 +34,9 @@
                     <div class="swiper-slide">
                         <img src="http://img10.jiuxian.com/bill/2017/0930/4efea781bd1745e48d8c60b5a7721bb7.jpg">
                     </div>      
-            </div>
+                </div>
             <div class="swiper-pagination"></div>
-        </div>
+            </div>
        </div>
        <!-- 酒类 -->
         <div class="type">
@@ -209,10 +209,10 @@
 
         <!-- 爆款推荐 -->
         <div class="baokuan">爆款推荐</div>
-
         <div class="tuijian">
             <div v-for="item in list" 
-                    :key="item.id">
+                    :key="item.id" @click="add_active(item.commonProductInfo)">
+                <router-link to="/WineDetail">    
                 <div><img :src="item.commonProductInfo.imgPath " alt=""></div>
                 <div>
                     <span class="span_1">{{ item.commonProductInfo.pname }}</span>
@@ -222,8 +222,8 @@
                         <span class="span_3">￥{{ item.commonProductInfo.jxPrice }}</span>
                     </p>
                 </div>
-            </div>
-            
+                </router-link>
+            </div>     
         </div>
         <footer>
             <p>
@@ -250,41 +250,23 @@ export default {
         list2:[]
     };
   },
-//   mounted(){
-//      Vue.nextTick(function(){
-//         var myswiper = new Swiper ('.swiperbox', {
-//                 pagination:'.swiper-pagination',
-//                 loop: true,
-//                 speed: 1000,
-//                 autoplay: 2000,
-//                 observer: true
-//         })  
-//       })
-//     },
   components:{
       Lunbo
   },
-    created(){
+  created(){
         this.$http.get(this.url).then(res =>{this.list = res.body.promoList;}),err =>{console.log(err);}
         this.$http.get(this.url2).then(res =>{this.list2 = res.body.killProList ;}),err =>{console.log(err);}
+  },
+  methods:{
+    add_active(item){
+      this.$store.dispatch('add_active',item)
     }
+  }
 }
 // console.log(this.list);
 </script>
     
 <style lang="css" scoped>
-/* 重置轮图样式 */
-.swiper-container-horizontal>.swiper-pagination-bullets{
-    bottom:0px;
-    top:160px;
-}
-.swiper-pagination-bullet{
-    background-color:#fff;
-    opacity:0.4;
-}
-.swiper-pagination-bullet .swiper-pagination-bullet-active{
-    background-color:#fff;
-}
 /* 滚动条高度 */
 ::-webkit-scrollbar{
     height: 1px;

@@ -227,14 +227,15 @@ export default {
         height: auto;
         overflow-x: hidden;
         overflow-y: auto;
-        margin-top: 0.5rem;
+        margin-top: -0.2rem;
     }
     /* 评论导航 */
     .detailComentNav {
-     height: 28px;
-     background-color: #fff;
-    /* border-bottom: 1px solid #e4e4e4; */
-     margin: 0 0 10px 0;
+        height: 28px;
+        padding: 12px 0;
+        background-color: #fff;
+        border-bottom: 1px solid #e4e4e4;
+        /* margin: 40px 0 10px; */
     }
     .detailComentNav li {
         width: 20%;

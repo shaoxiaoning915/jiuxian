@@ -40,13 +40,13 @@ export default {
   name: "component_name",
   data () {
     return {
-        url:'../../../static/allEval.json',
+        url:'./static/allEval.json',
         list1:[]
     };
   },
   created(){
       this.$http.get(this.url).then (res => {
-        //   console.log(res.body.proEvalList);
+          console.log(res.body.proEvalList);
           this.list1 = res.body.proEvalList;
       },err => {
           console.log(err);

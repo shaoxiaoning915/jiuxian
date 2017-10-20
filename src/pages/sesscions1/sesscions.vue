@@ -220,6 +220,9 @@ export default {
         // console.log(this);
         // 在网络请求中，推荐使用箭头函数，这样能完美的解决 this指向问题
         this.$http.get(this.url).then(res =>{
+            // console.log(res, this)
+            console.log(res);
+            // console.log(this);
             this.list1 = res.body.list1;
             this.list2 = res.body.list2;
             this.list3 = res.body.list3;
@@ -239,12 +242,6 @@ export default {
 </script>
     
 <style lang="css" scoped>
-    /* #main h1{
-        color:blueviolet;
-    } */
-    #main{
-        /* padding-bottom: 0.4rem; */
-    }
     /* 清除浮动 */
     .clearBoth:after{
         clear: both;
@@ -307,7 +304,7 @@ export default {
         width: 100%;
         margin: 0 auto;
         padding-top: 0.4rem;
-        /* margin-top: -0.6rem; */
+        margin-top: -0.6rem;
     }
     /* 头部部分右边点击导航 */
     .nav{
