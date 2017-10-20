@@ -246,7 +246,7 @@ export default {
         color:blueviolet;
     } */
     #main{
-        padding-bottom: 0.4rem;
+        /* padding-bottom: 0.4rem; */
     }
     /* 清除浮动 */
     .clearBoth:after{
