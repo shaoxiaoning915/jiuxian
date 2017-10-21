@@ -13,6 +13,26 @@ let state = {
     times:''
 
 }
+
+
+// 获取时间
+var time = new Date().toString().split(":");
+time[0] = time[0].slice(-2);
+time[2] = time[2].slice(0,2);
+for(var i = 0;i<time.length;i++){
+    time[i] = Number(time[i])
+}
+// 转换时间
+var alltime = state.alls[0]*60*60 + state.alls[1]*60 + state.alls[2] - time[0]*60*60 - time[1]*60 - time[2];
+
+// 计时器
+setInterval(() => {
+    alltime--;
+    state.timeh = ('00' + parseInt(alltime/ 3600)).slice(-2);
+    state.timem = ('00' + parseInt((alltime - 3600 * state.timeh) / 60)).slice(-2);
+    state.times = ('00' + parseInt(alltime - 3600 * state.timeh - 60 * state.timem)).slice(-2);
+    }, 1000)
+
 let mutations = {
     ADD(state,obj){
         //用来判断所添加的商品是否存在的标识
@@ -75,15 +95,9 @@ let mutations = {
        } 
     },
     // 倒计时
-    CHANGETIME(state, time) {
+    CHANGETIME(state) {
         // state.alls -= 1;
-        var alltime = state.alls[0]*60*60 + state.alls[1]*60 + state.alls[2] - time[0]*60*60 + time[1]*60 +time[2];
-            setInterval(() => {
-                alltime--;
-                state.timeh = ('00' + parseInt(alltime/ 3600)).slice(-2);
-                state.timem = ('00' + parseInt((alltime - 3600 * state.timeh) / 60)).slice(-2);
-                state.times = ('00' + parseInt(alltime - 3600 * state.timeh - 60 * state.timem)).slice(-2);
-                }, 1000)
+
     },
 }
 let getters = {
